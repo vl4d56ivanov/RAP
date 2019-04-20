@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using RAP.Domain.Identity;
 using RAP.UI.Models;
 
 namespace RAP.UI.Controllers
