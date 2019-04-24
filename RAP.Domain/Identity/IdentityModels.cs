@@ -1,7 +1,9 @@
-﻿using System.Security.Claims;
+﻿using System.Data.Entity;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using RAP.Domain.Entities;
 
 namespace RAP.Domain.Identity
 {
@@ -24,9 +26,12 @@ namespace RAP.Domain.Identity
         {
         }
 
+        //TODO: исправление ошибок при работе с DI
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
+
+        public virtual DbSet<Patient> Patients { get; set; }
     }
 }

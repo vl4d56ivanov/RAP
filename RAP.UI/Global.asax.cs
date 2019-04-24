@@ -15,7 +15,11 @@ namespace RAP.UI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
+            SimpleInjectorConfig.RegisterComponents();
+
             Database.SetInitializer<ApplicationDbContext>(new InitializationRapDb());
+
+            MapperConfig.RegisterMapper();
         }
     }
 }
