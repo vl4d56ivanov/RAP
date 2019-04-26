@@ -6,8 +6,8 @@
 }
 
 @section styles{
-    
-    }
+    @Styles.Render("~/Content/datatables")
+}
 
 <h2>Index</h2>
 
@@ -18,20 +18,20 @@
     <thead>
         <tr>
             <th>
-                    @Html.DisplayNameFor(model => model.FName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.LName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.MName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Phone)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AddressId)
-                </th>
+                @Html.DisplayNameFor(model => model.FName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Phone)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressId)
+            </th>
             @*<th>
                     @Html.DisplayNameFor(model => model.Address2Id)
                 </th>*@
@@ -43,20 +43,20 @@
         {
             <tr>
                 <td>
-                        @Html.DisplayFor(modelItem => item.FName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Phone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AddressId)
-                    </td>
+                    @Html.DisplayFor(modelItem => item.FName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddressId)
+                </td>
                 @*<td>
                         @Html.DisplayFor(modelItem => item.Address2Id)
                     </td>*@
@@ -71,8 +71,8 @@
 </table>
 
 @section scripts{
-    
-    }
+    @Scripts.Render("~/bundles/datatables")
+}
 
 
 
