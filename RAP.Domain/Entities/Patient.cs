@@ -11,7 +11,7 @@
         public int AddressId { get; set; }
         public Address Address { get; set; }
 
-        public int Address2Id { get; set; }
-        public Address Address2 { get; set; }
+        //public int Address2Id { get; set; }
+        //public Address Address2 { get; set; }
     }
 }

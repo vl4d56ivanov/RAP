@@ -15,7 +15,8 @@ namespace RAP.UI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            SimpleInjectorConfig.RegisterComponents();
+            //TODO: DI disabled.
+            //SimpleInjectorConfig.RegisterComponents();
 
             Database.SetInitializer<ApplicationDbContext>(new InitializationRapDb());
 

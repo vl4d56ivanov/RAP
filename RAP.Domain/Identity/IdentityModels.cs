@@ -26,12 +26,12 @@ namespace RAP.Domain.Identity
         {
         }
 
-        //TODO: исправление ошибок при работе с DI
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
         }
 
+        public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
     }
 }

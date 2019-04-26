@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using RAP.Domain.Entities;
 using System.Data.Entity;
 
 namespace RAP.Domain.Identity
@@ -28,6 +29,11 @@ namespace RAP.Domain.Identity
             {
                 userManager.AddToRole(admin.Id, role.Name);
             }
+
+            //TODO: Deleted after tests.
+            Address a1 = new Address { Sity = "London" };
+            db.Address.Add(a1);
+            db.Patients.Add(new Patient { FName = "John", LName = "Snow", Address = a1 });
 
             base.Seed(db);
         }

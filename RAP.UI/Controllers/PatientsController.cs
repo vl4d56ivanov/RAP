@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
+using RAP.Domain.Repositories;
 
 namespace RAP.UI.Controllers
 {
@@ -14,9 +15,10 @@ namespace RAP.UI.Controllers
     {
         IUnitOfWork unitOfWork;
 
-        public PatientsController(IUnitOfWork uow)
+        //TODO: Add later DI
+        public PatientsController()
         {
-            unitOfWork = uow;
+            unitOfWork = new EFUnitOfWork();
         }
 
         // GET: Patients
