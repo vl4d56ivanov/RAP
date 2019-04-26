@@ -16,7 +16,7 @@ namespace RAP.UI.Models
         public int AddressId { get; set; }
         public AddressViewModel Address { get; set; }
 
-        //public int Address2Id { get; set; }
-        //public AddressViewModel Address2 { get; set; }
+        public int Address2Id { get; set; }
+        public AddressViewModel Address2 { get; set; }
     }
 }

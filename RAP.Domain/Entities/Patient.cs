@@ -1,4 +1,7 @@
-﻿namespace RAP.Domain.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RAP.Domain.Entities
 {
     public class Patient
     {
@@ -8,10 +11,12 @@
         public string MName { get; set; }
         public string Phone { get; set; }
         
+        //[ForeignKey("Address")]
         public int AddressId { get; set; }
         public Address Address { get; set; }
 
-        //public int Address2Id { get; set; }
-        //public Address Address2 { get; set; }
+        //[ForeignKey("Address")]
+        public int? Address2Id { get; set; }
+        public Address Address2 { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace RAP.Domain.Entities
         public string Home { get; set; }
         public string Flat { get; set; }
 
-        ICollection<Patient> Patients { get; set; }
+        public ICollection<Patient> Patients { get; set; }
 
         public Address()
         {

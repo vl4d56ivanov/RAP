@@ -33,5 +33,18 @@ namespace RAP.Domain.Identity
 
         public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Patient> Patients { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Address>()
+                        .HasMany(a => a.Patients)
+                        .WithOptional(p => p.Address);
+
+            modelBuilder.Entity<Address>()
+                        .HasMany(a => a.Patients)
+                        .WithOptional(p => p.Address2);
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
