@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAP.Domain", "RAP.Domain\RA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAP.UI", "RAP.UI\RAP.UI.csproj", "{CB44D9BA-5822-4E3B-8D91-BFA6F2779590}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAP.Api", "RAP.Api\RAP.Api.csproj", "{8D5CFBF0-B377-45EB-9CE4-AACA7F8595E3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CB44D9BA-5822-4E3B-8D91-BFA6F2779590}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB44D9BA-5822-4E3B-8D91-BFA6F2779590}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB44D9BA-5822-4E3B-8D91-BFA6F2779590}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8D5CFBF0-B377-45EB-9CE4-AACA7F8595E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8D5CFBF0-B377-45EB-9CE4-AACA7F8595E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8D5CFBF0-B377-45EB-9CE4-AACA7F8595E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8D5CFBF0-B377-45EB-9CE4-AACA7F8595E3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
