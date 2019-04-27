@@ -1,5 +1,5 @@
 ﻿using RAP.Domain.Identity;
-using RAP.Domain.Log;
+using RAP.Domain.Util;
 using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -23,7 +23,7 @@ namespace RAP.UI
 
             MapperConfig.RegisterMapper();
 
-            Logger.InitLogger();
+            LoggerManager.InitLogger();
         }
     }
 }
