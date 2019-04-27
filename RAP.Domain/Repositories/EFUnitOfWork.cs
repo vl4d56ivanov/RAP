@@ -13,6 +13,7 @@ namespace RAP.Domain.Repositories
     {
         ApplicationDbContext db;
         BaseRepository<Patient> patientRepository;
+        BaseRepository<Address> addressRepository;
 
         public EFUnitOfWork()
         {
@@ -27,6 +28,17 @@ namespace RAP.Domain.Repositories
                     patientRepository = new BaseRepository<Patient>(db);
 
                 return patientRepository;
+            }
+        }
+
+        public IBaseRepository<Address> Addresses
+        {
+            get
+            {
+                if (addressRepository == null)
+                    addressRepository = new BaseRepository<Address>(db);
+
+                return addressRepository;
             }
         }
 

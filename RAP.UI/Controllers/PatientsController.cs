@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using AutoMapper;
 using RAP.Domain.Repositories;
+using RAP.Domain.Entities;
 
 namespace RAP.UI.Controllers
 {
@@ -28,33 +29,41 @@ namespace RAP.UI.Controllers
             return View(patients);
         }
 
+        // GET: Patients/Create
+        public async Task<ActionResult> Create()
+        {
+            //TODO:For DropDownList Address
+            //ViewBag.AddressList = new SelectList(await unitOfWork.Addresses.GetAllAsync(), "AddressId", "City");
+
+            return View();
+        }
+
+        // POST: Patients/Create
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(PatientViewModel patientViewModel)
+        {
+            Patient patient = Mapper.Map<Patient>(patientViewModel); 
+
+            if (ModelState.IsValid)
+            {
+                unitOfWork.Patients.Create(patient);
+                await unitOfWork.SaveAsync();
+
+                return RedirectToAction("Index");
+            }
+
+            //ViewBag.AddressId = new SelectList(await unitOfWork.Addresses.GetAllAsync(), "AddressId", "City", patientViewModel.AddressId);
+            return View(patientViewModel);
+        }
+
         // GET: Patients/Details/5
         //public ActionResult Details(int id)
         //{
         //    return View();
         //}
 
-        //// GET: Patients/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
 
-        //// POST: Patients/Create
-        //[HttpPost]
-        //public ActionResult Create(FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add insert logic here
-
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
 
         //// GET: Patients/Edit/5
         //public ActionResult Edit(int id)

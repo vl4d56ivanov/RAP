@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using RAP.Domain.Entities;
+using System.Collections.Generic;
 using System.Data.Entity;
 
 namespace RAP.Domain.Identity
@@ -32,7 +33,10 @@ namespace RAP.Domain.Identity
 
             //TODO: Deleted after tests.
             Address a1 = new Address { Sity = "London" };
-            db.Address.Add(a1);
+            Address a2 = new Address { Sity = "York" };
+            Address a3 = new Address { Sity = "New York" };
+
+            db.Address.AddRange(new List<Address> { a1, a2, a3 });
             db.Patients.Add(new Patient { FName = "John", LName = "Snow", Address = a1 });
 
             base.Seed(db);

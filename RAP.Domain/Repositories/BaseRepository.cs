@@ -24,5 +24,10 @@ namespace RAP.Domain.Repositories
         {
             return await dbSet.AsNoTracking().ToListAsync();
         }
+
+        public void Create(T item)
+        {
+            dbSet.Add(item);
+        }
     }
 }

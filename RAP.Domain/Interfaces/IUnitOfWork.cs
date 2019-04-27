@@ -10,6 +10,7 @@ namespace RAP.Domain.Interfaces
     public interface IUnitOfWork : IDisposable
     {
         IBaseRepository<Patient> Patients { get; }
+        IBaseRepository<Address> Addresses { get; }
         
         Task SaveAsync();
     }
