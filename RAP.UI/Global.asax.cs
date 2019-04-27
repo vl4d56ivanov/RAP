@@ -1,4 +1,5 @@
 ﻿using RAP.Domain.Identity;
+using RAP.Domain.Log;
 using System.Data.Entity;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -21,6 +22,8 @@ namespace RAP.UI
             Database.SetInitializer<ApplicationDbContext>(new InitializationRapDb());
 
             MapperConfig.RegisterMapper();
+
+            Logger.InitLogger();
         }
     }
 }

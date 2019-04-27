@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using AutoMapper;
 using RAP.Domain.Repositories;
 using RAP.Domain.Entities;
+using RAP.Domain.Log;
 
 namespace RAP.UI.Controllers
 {
@@ -49,6 +50,8 @@ namespace RAP.UI.Controllers
             {
                 unitOfWork.Patients.Create(patient);
                 await unitOfWork.SaveAsync();
+
+                Logger.Log.Info($"Created new Patient: {patientViewModel.FName} {patientViewModel.LName}");
 
                 return RedirectToAction("Index");
             }
