@@ -26,12 +26,22 @@ namespace RAP.UI
                       "~/Scripts/DataTables/jquery.dataTables.min.js",
                       "~/Scripts/InitDataTables.js"));
 
+            //TODO: Bandle did not connnected to page (Create Patient)?????????
+            bundles.Add(new ScriptBundle("~/bundles/intl-tel-input").Include(
+                      "~/Scripts/IntlTelInput_js/utils.js",
+                      "~/Scripts/IntlTelInput_js/intlTelInput.min.js",
+                      "~/Scripts/InitIntlTelInput.js"));
+
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
 
             bundles.Add(new StyleBundle("~/Content/datatables").Include(
                      "~/Content/DataTables/css/jquery.dataTables.min.css"));
+
+            bundles.Add(new StyleBundle("~/Content/intl-tel-input").Include(
+                      "~/Content/IntlTelInput_css/demo.css",
+                      "~/Content/IntlTelInput_css/intlTelInput.css"));
         }
     }
 }

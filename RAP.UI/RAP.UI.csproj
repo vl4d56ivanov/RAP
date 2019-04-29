@@ -390,8 +390,13 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\IntlTelInput_css\demo.css" />
+    <Content Include="Content\IntlTelInput_css\intlTelInput.css" />
+    <Content Include="Content\IntlTelInput_css\intlTelInput.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\IntlTelInput_img\flags%402x.png" />
+    <Content Include="fonts\IntlTelInput_img\flags.png" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
@@ -480,6 +485,12 @@
     <Content Include="Scripts\DataTables\responsive.semanticui.js" />
     <Content Include="Scripts\DataTables\responsive.semanticui.min.js" />
     <Content Include="Scripts\InitDataTables.js" />
+    <Content Include="Scripts\InitIntlTelInput.js" />
+    <Content Include="Scripts\IntlTelInput_js\intlTelInput-jquery.js" />
+    <Content Include="Scripts\IntlTelInput_js\intlTelInput-jquery.min.js" />
+    <Content Include="Scripts\IntlTelInput_js\intlTelInput.js" />
+    <Content Include="Scripts\IntlTelInput_js\intlTelInput.min.js" />
+    <Content Include="Scripts\IntlTelInput_js\utils.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
