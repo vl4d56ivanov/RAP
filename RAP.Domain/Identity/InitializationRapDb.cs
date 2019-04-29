@@ -32,12 +32,12 @@ namespace RAP.Domain.Identity
             }
 
             //TODO: Deleted after tests.
-            Address a1 = new Address { Sity = "London" };
-            Address a2 = new Address { Sity = "York" };
+            Address a1 = new Address { Sity = "London", Street = "Green str.", Home = "8a", Flat = "16" };
+            Address a2 = new Address { Sity = "York", Street = "Ellow str.", Home = "88a", Flat = "16" };
             Address a3 = new Address { Sity = "New York" };
 
             db.Address.AddRange(new List<Address> { a1, a2, a3 });
-            db.Patients.Add(new Patient { FName = "John", LName = "Snow", Address = a1 });
+            db.Patients.Add(new Patient { FName = "John", LName = "Snow", Address = a1, Address2 = a2 });
 
             base.Seed(db);
         }

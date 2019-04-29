@@ -30,10 +30,10 @@
                 @Html.DisplayNameFor(model => model.Phone)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.AddressId)
+                @Html.DisplayNameFor(model => model.Address)
             </th>
             <th>
-                    @Html.DisplayNameFor(model => model.Address2Id)
+                    @Html.DisplayNameFor(model => model.Address2)
             </th>
         </tr>
     </thead>
@@ -41,6 +41,9 @@
     <tbody>
         @foreach (var item in Model)
         {
+            string allAddress = $"{item.Address.Flat}, {item.Address.Home}, {item.Address.Street}, {item.Address.Sity}";
+            string allAddress2 = $"{item.Address2.Flat}, {item.Address2.Home}, {item.Address2.Street}, {item.Address2.Sity}";
+
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.FName)
@@ -55,10 +58,10 @@
                     @Html.DisplayFor(modelItem => item.Phone)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.AddressId)
+                    @allAddress
                 </td>
                 <td>
-                        @Html.DisplayFor(modelItem => item.Address2Id)
+                    @allAddress2
                 </td>
                 @*<td>
                         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

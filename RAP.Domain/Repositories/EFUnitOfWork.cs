@@ -12,7 +12,7 @@ namespace RAP.Domain.Repositories
     public class EFUnitOfWork : IUnitOfWork
     {
         ApplicationDbContext db;
-        BaseRepository<Patient> patientRepository;
+        PatientsRepository patientRepository;
         BaseRepository<Address> addressRepository;
 
         public EFUnitOfWork()
@@ -25,7 +25,7 @@ namespace RAP.Domain.Repositories
             get
             {
                 if (patientRepository == null)
-                    patientRepository = new BaseRepository<Patient>(db);
+                    patientRepository = new PatientsRepository(db);
 
                 return patientRepository;
             }
