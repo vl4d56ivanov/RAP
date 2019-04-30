@@ -39,17 +39,19 @@ namespace RAP.Api.Controllers
         }
 
         // POST: api/Patients
-        public IHttpActionResult Post([FromBody]PatientApiModel patient)
+        public async Task<IHttpActionResult> Post([FromBody]PatientApiModel patient)
         {
             unitOfWork.Patients.Create(Mapper.Map<Patient>(patient));
+            await unitOfWork.SaveAsync();
 
             return Ok();
         }
 
         // PUT: api/Patients/5
-        public IHttpActionResult Put(int id, [FromBody]PatientApiModel patient)
+        public async Task<IHttpActionResult> Put([FromBody]PatientApiModel patient)
         {
             unitOfWork.Patients.Update(Mapper.Map<Patient>(patient));
+            await unitOfWork.SaveAsync();
 
             return Ok();
         }
@@ -58,6 +60,7 @@ namespace RAP.Api.Controllers
         public async Task<IHttpActionResult> Delete(int id)
         {
             await unitOfWork.Patients.Delete(id);
+            await unitOfWork.SaveAsync();
 
             return Ok();
         }
