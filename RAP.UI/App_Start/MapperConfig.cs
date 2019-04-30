@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using RAP.Domain.Entities;
+using RAP.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,11 @@ namespace RAP.UI
     {
         public static void RegisterMapper()
         {
-            Mapper.Initialize(cfg => { });
+            Mapper.Initialize(cfg => 
+            {
+                //cfg.CreateMap<PatientViewModel, Patient>();
+                cfg.CreateMap<AddressViewModel, Address>();
+            });
         }
     }
 }
