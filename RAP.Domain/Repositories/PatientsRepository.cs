@@ -24,9 +24,27 @@ namespace RAP.Domain.Repositories
             return patients;
         }
 
+        public async Task<Patient> GetById(int id)
+        {
+            return await db.Patients.Include(p => p.Address).Include(p => p.Address2).FirstOrDefaultAsync(p => p.Id == id);
+        }
+
         public void Create(Patient item)
         {
             db.Patients.Add(item);
+        }
+
+        public void Update(Patient item)
+        {
+            db.Entry(item).State = EntityState.Modified;
+        }
+
+        public async Task Delete(int id)
+        {
+            Patient item = await db.Patients.FindAsync(id);
+
+            if (item != null)
+                db.Patients.Remove(item);
         }
     }
 }

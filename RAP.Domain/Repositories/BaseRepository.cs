@@ -25,9 +25,27 @@ namespace RAP.Domain.Repositories
             return await dbSet.AsNoTracking().ToListAsync();
         }
 
+        public async Task<T> GetById(int id)
+        {
+            return await dbSet.FindAsync(id);
+        }
+
         public void Create(T item)
         {
             dbSet.Add(item);
+        }
+
+        public void Update(T item)
+        {
+            db.Entry(item).State = EntityState.Modified;
+        }
+
+        public async Task Delete(int id)
+        {
+            T item = await dbSet.FindAsync(id);
+
+            if (item == null)
+                dbSet.Remove(item);
         }
     }
 }

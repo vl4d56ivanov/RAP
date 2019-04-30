@@ -10,6 +10,12 @@ namespace RAP.Domain.Interfaces
     {
         Task<IEnumerable<T>> GetAllAsync();
 
+        Task<T> GetById(int id);
+
         void Create(T item);
+
+        void Update(T item);
+
+        Task Delete(int id);
     }
 }

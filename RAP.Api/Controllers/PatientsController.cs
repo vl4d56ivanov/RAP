@@ -28,25 +28,36 @@ namespace RAP.Api.Controllers
             return Json(patients);
         }
 
-        //// GET: api/Patients/5
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET: api/Patients/5
+        public async Task<IHttpActionResult> Get(int id)
+        {
+            Patient patient = await unitOfWork.Patients.GetById(id);
 
-        //// POST: api/Patients
-        //public void Post([FromBody]string value)
-        //{
-        //}
+            return Json(patient);
+        }
 
-        //// PUT: api/Patients/5
-        //public void Put(int id, [FromBody]string value)
-        //{
-        //}
+        // POST: api/Patients
+        public IHttpActionResult Post([FromBody]Patient patient)
+        {
+            unitOfWork.Patients.Create(patient);
 
-        //// DELETE: api/Patients/5
-        //public void Delete(int id)
-        //{
-        //}
+            return Ok();
+        }
+
+        // PUT: api/Patients/5
+        public IHttpActionResult Put(int id, [FromBody]Patient patient)
+        {
+            unitOfWork.Patients.Update(patient);
+
+            return Ok();
+        }
+
+        // DELETE: api/Patients/5
+        public async Task<IHttpActionResult> Delete(int id)
+        {
+            await unitOfWork.Patients.Delete(id);
+
+            return Ok();
+        }
     }
 }
