@@ -1,4 +1,6 @@
-﻿using RAP.Domain.Entities;
+﻿using AutoMapper;
+using RAP.Api.Models;
+using RAP.Domain.Entities;
 using RAP.Domain.Interfaces;
 using RAP.Domain.Repositories;
 using System;
@@ -24,30 +26,30 @@ namespace RAP.Api.Controllers
         public async Task<IHttpActionResult> GetAll()
         {
             // Add api model and Automapper? 
-            IEnumerable<Patient> patients = await unitOfWork.Patients.GetAllAsync();
+            IEnumerable<PatientApiModel> patients = Mapper.Map<IEnumerable<PatientApiModel>>(await unitOfWork.Patients.GetAllAsync());
             return Json(patients);
         }
 
         // GET: api/Patients/5
         public async Task<IHttpActionResult> Get(int id)
         {
-            Patient patient = await unitOfWork.Patients.GetById(id);
+            PatientApiModel patient = Mapper.Map<PatientApiModel>(await unitOfWork.Patients.GetById(id));
 
             return Json(patient);
         }
 
         // POST: api/Patients
-        public IHttpActionResult Post([FromBody]Patient patient)
+        public IHttpActionResult Post([FromBody]PatientApiModel patient)
         {
-            unitOfWork.Patients.Create(patient);
+            unitOfWork.Patients.Create(Mapper.Map<Patient>(patient));
 
             return Ok();
         }
 
         // PUT: api/Patients/5
-        public IHttpActionResult Put(int id, [FromBody]Patient patient)
+        public IHttpActionResult Put(int id, [FromBody]PatientApiModel patient)
         {
-            unitOfWork.Patients.Update(patient);
+            unitOfWork.Patients.Update(Mapper.Map<Patient>(patient));
 
             return Ok();
         }
