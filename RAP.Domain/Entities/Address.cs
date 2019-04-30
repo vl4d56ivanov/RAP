@@ -5,7 +5,7 @@ namespace RAP.Domain.Entities
     public class Address
     {
         public int Id { get; set; }
-        public string Sity { get; set; }
+        public string City { get; set; }
         public string Street { get; set; }
         public string Home { get; set; }
         public string Flat { get; set; }
