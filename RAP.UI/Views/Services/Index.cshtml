@@ -54,5 +54,10 @@
 @section scripts{
     @*@Scripts.Render("~/bundles/datatables")*@
     <script src="~/Scripts/DataTables/jquery.dataTables.min.js"></script>
-    <script src="~/Scripts/InitIntlTelInput.js"></script>
+    @*<script src="~/Scripts/InitDataTables.js"></script>*@
+    <script>
+        $(document).ready(function () {
+            $('.table').DataTable();
+        });
+    </script>
 }
