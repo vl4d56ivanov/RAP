@@ -65,7 +65,7 @@ namespace RAP.Domain.Repositories
                 {
                     try
                     {
-                        await DeleteAddress(item.AddressId);
+                        await DeleteAddress(item.AddressId.Value);
 
                         if (item.Address2Id != null)
                             await DeleteAddress(item.Address2Id.Value);

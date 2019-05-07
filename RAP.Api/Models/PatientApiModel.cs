@@ -17,7 +17,7 @@ namespace RAP.Api.Models
 
         public string Phone { get; set; }
 
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
 
         public AddressApiModel Address { get; set; }
 

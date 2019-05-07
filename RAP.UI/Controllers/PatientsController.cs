@@ -44,7 +44,29 @@ namespace RAP.UI.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(PatientViewModel patientViewModel)
         {
-            Patient patient = Mapper.Map<Patient>(patientViewModel); 
+            Patient patient = Mapper.Map<Patient>(patientViewModel);
+
+            if (
+                String.IsNullOrEmpty(patientViewModel.Address.City) ||
+                String.IsNullOrEmpty(patientViewModel.Address.Street) ||
+                String.IsNullOrEmpty(patientViewModel.Address.Home) ||
+                String.IsNullOrEmpty(patientViewModel.Address.Flat))
+                ModelState.AddModelError("Address 1", "Address 1 must be filled out completely.");
+
+            
+            if ((patientViewModel.Address2.City == null ||
+                patientViewModel.Address2.Street == null ||
+                patientViewModel.Address2.Home == null ||
+                patientViewModel.Address2.Flat == null))
+            {
+                if (!(patientViewModel.Address2.City == null &&
+                    patientViewModel.Address2.Street == null &&
+                    patientViewModel.Address2.Home == null &&
+                    patientViewModel.Address2.Flat == null))
+                {
+                    ModelState.AddModelError("Address 2", "Address 2 must be filled out completely.");
+                }
+            }
 
             if (ModelState.IsValid)
             {

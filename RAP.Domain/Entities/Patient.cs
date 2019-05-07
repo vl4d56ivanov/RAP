@@ -10,12 +10,10 @@ namespace RAP.Domain.Entities
         public string LName { get; set; }
         public string MName { get; set; }
         public string Phone { get; set; }
-        
-        //[ForeignKey("Address")]
-        public int AddressId { get; set; }
+
+        public int? AddressId { get; set; }
         public Address Address { get; set; }
 
-        //[ForeignKey("Address")]
         public int? Address2Id { get; set; }
         public Address Address2 { get; set; }
     }

@@ -26,8 +26,7 @@ namespace RAP.UI.Models
         [StringLength(20, MinimumLength = 2)]
         public string Phone { get; set; }
 
-        [Required]
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
 
         [Display(Name = "Address")]
         public AddressViewModel Address { get; set; }
