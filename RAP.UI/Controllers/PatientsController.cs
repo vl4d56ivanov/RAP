@@ -13,6 +13,7 @@ using RAP.Domain.Util;
 
 namespace RAP.UI.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class PatientsController : Controller
     {
         IUnitOfWork unitOfWork;

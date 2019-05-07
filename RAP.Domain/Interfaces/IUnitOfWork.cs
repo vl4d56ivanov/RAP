@@ -11,6 +11,8 @@ namespace RAP.Domain.Interfaces
     {
         IBaseRepository<Patient> Patients { get; }
         IBaseRepository<Address> Addresses { get; }
+        IBaseRepository<ServiceType> ServiceTypes { get; }
+        IBaseRepository<Service> Services { get; }
         
         Task SaveAsync();
     }

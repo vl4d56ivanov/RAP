@@ -39,6 +39,12 @@ namespace RAP.Domain.Identity
             db.Address.AddRange(new List<Address> { a1, a2, a3 });
             db.Patients.Add(new Patient { FName = "John", LName = "Snow", Address = a1, Address2 = a2 });
 
+            ServiceType sT1 = new ServiceType { Name = "TypeOne" };
+            ServiceType sT2 = new ServiceType { Name = "TypeTwo" };
+            db.ServiceTypes.AddRange(new List<ServiceType> { sT1, sT2 });
+
+            db.Services.Add(new Service { Name = "ServiceOne", ServiceType = sT1 });
+
             base.Seed(db);
         }
     }

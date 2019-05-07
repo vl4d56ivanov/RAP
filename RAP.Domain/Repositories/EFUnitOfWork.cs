@@ -14,6 +14,8 @@ namespace RAP.Domain.Repositories
         ApplicationDbContext db;
         PatientsRepository patientRepository;
         BaseRepository<Address> addressRepository;
+        BaseRepository<ServiceType> serviceTypeRepository;
+        ServicesRepository serviceRepository;
 
         public EFUnitOfWork()
         {
@@ -39,6 +41,28 @@ namespace RAP.Domain.Repositories
                     addressRepository = new BaseRepository<Address>(db);
 
                 return addressRepository;
+            }
+        }
+
+        public IBaseRepository<ServiceType> ServiceTypes
+        {
+            get
+            {
+                if (serviceTypeRepository == null)
+                    serviceTypeRepository = new BaseRepository<ServiceType>(db);
+
+                return serviceTypeRepository;
+            }
+        }
+
+        public IBaseRepository<Service> Services
+        {
+            get
+            {
+                if (serviceRepository == null)
+                    serviceRepository = new ServicesRepository(db);
+
+                return serviceRepository;
             }
         }
 
