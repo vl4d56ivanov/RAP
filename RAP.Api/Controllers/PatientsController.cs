@@ -41,6 +41,12 @@ namespace RAP.Api.Controllers
         // POST: api/Patients
         public async Task<IHttpActionResult> Post([FromBody]PatientApiModel patient)
         {
+            if (patient == null)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             unitOfWork.Patients.Create(Mapper.Map<Patient>(patient));
             await unitOfWork.SaveAsync();
 
@@ -52,6 +58,12 @@ namespace RAP.Api.Controllers
         // PUT: api/Patients/5
         public async Task<IHttpActionResult> Put([FromBody]PatientApiModel patient)
         {
+            if (patient == null)
+                return BadRequest();
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             unitOfWork.Patients.Update(Mapper.Map<Patient>(patient));
             await unitOfWork.SaveAsync();
 
