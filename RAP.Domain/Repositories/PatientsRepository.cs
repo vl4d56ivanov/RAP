@@ -36,7 +36,23 @@ namespace RAP.Domain.Repositories
 
         public void Update(Patient item)
         {
-            db.Entry(item).State = EntityState.Modified;
+            using(var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    UpdateAddress(item.Address);
+
+                    if (item.Address2 != null)
+                        UpdateAddress(item.Address2);
+
+                    db.Entry(item).State = EntityState.Modified;
+                }
+                catch (Exception)
+                {
+                    transaction.Rollback();
+                    throw;
+                }
+            }           
         }
 
         public async Task Delete(int id)
@@ -44,7 +60,37 @@ namespace RAP.Domain.Repositories
             Patient item = await db.Patients.FindAsync(id);
 
             if (item != null)
-                db.Patients.Remove(item);
+            {
+                using (var transaction = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        await DeleteAddress(item.AddressId);
+
+                        if (item.Address2Id != null)
+                            await DeleteAddress(item.Address2Id.Value);
+
+                        db.Patients.Remove(item);
+                    }
+                    catch (Exception)
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }                
+            }           
+        }
+
+        private void UpdateAddress(Address address)
+        {
+            db.Entry(address).State = EntityState.Modified;
+        }
+
+        private async Task DeleteAddress(int addressId)
+        {
+            Address address = await db.Address.FindAsync(addressId);
+            if (address != null)
+                db.Address.Remove(address);
         }
     }
 }

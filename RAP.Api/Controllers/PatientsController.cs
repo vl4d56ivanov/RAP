@@ -3,6 +3,7 @@ using RAP.Api.Models;
 using RAP.Domain.Entities;
 using RAP.Domain.Interfaces;
 using RAP.Domain.Repositories;
+using RAP.Domain.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,6 @@ namespace RAP.Api.Controllers
         // GET: api/Patients
         public async Task<IHttpActionResult> GetAll()
         {
-            // Add api model and Automapper? 
             IEnumerable<PatientApiModel> patients = Mapper.Map<IEnumerable<PatientApiModel>>(await unitOfWork.Patients.GetAllAsync());
             return Json(patients);
         }
@@ -44,6 +44,8 @@ namespace RAP.Api.Controllers
             unitOfWork.Patients.Create(Mapper.Map<Patient>(patient));
             await unitOfWork.SaveAsync();
 
+            LoggerManager.Log.Info($"Created new Patient: {patient.FName} {patient.LName}");
+
             return Ok();
         }
 
@@ -53,6 +55,8 @@ namespace RAP.Api.Controllers
             unitOfWork.Patients.Update(Mapper.Map<Patient>(patient));
             await unitOfWork.SaveAsync();
 
+            LoggerManager.Log.Info($"Updated Patient: {patient.FName} {patient.LName}");
+
             return Ok();
         }
 
@@ -61,6 +65,8 @@ namespace RAP.Api.Controllers
         {
             await unitOfWork.Patients.Delete(id);
             await unitOfWork.SaveAsync();
+
+            LoggerManager.Log.Info($"Deleted Patient ID = {id}");
 
             return Ok();
         }

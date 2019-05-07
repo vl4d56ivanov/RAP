@@ -44,7 +44,7 @@ namespace RAP.Domain.Repositories
         {
             T item = await dbSet.FindAsync(id);
 
-            if (item == null)
+            if (item != null)
                 dbSet.Remove(item);
         }
     }
