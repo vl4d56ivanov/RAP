@@ -406,6 +406,9 @@
     <Content Include="Content\IntlTelInput_css\demo.css" />
     <Content Include="Content\IntlTelInput_css\intlTelInput.css" />
     <Content Include="Content\IntlTelInput_css\intlTelInput.min.css" />
+    <Content Include="Content\ServiceLogos\ServiceOne_08.05.19.jpg" />
+    <Content Include="Content\ServiceLogos\ServiceThree_08.05.19.jpg" />
+    <Content Include="Content\ServiceLogos\ServiceTwo_08.05.19.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\IntlTelInput_img\flags%402x.png" />

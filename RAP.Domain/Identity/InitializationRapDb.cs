@@ -43,7 +43,9 @@ namespace RAP.Domain.Identity
             ServiceType sT2 = new ServiceType { Name = "TypeTwo" };
             db.ServiceTypes.AddRange(new List<ServiceType> { sT1, sT2 });
 
-            db.Services.Add(new Service { Name = "ServiceOne", ServiceType = sT1 });
+            db.Services.Add(new Service { Name = "ServiceOne", ServiceType = sT1, Logo = "ServiceOne_08.05.19.jpg" });
+            db.Services.Add(new Service { Name = "ServiceTwo", ServiceType = sT2, Logo = "ServiceTwo_08.05.19.jpg" });
+            db.Services.Add(new Service { Name = "ServiceThree", ServiceType = sT1, Logo = "ServiceThree_08.05.19.jpg" });
 
             base.Seed(db);
         }

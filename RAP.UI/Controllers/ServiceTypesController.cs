@@ -100,5 +100,11 @@ namespace RAP.UI.Controllers
                 return View();
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

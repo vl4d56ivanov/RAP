@@ -9,7 +9,7 @@ namespace RAP.UI.Models
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-        //public string Logo { get; set; }
+        public string Logo { get; set; }
 
         public int SrviceTypeId { get; set; }
 

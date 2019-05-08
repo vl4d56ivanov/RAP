@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using RAP.Domain.Entities;
 using AutoMapper;
 using RAP.UI.Models;
+using System.Web.Configuration;
 
 namespace RAP.UI.Controllers
 {
@@ -26,6 +27,9 @@ namespace RAP.UI.Controllers
         public async Task<ActionResult> Index()
         {
             IEnumerable <Service> services = await unitOfWork.Services.GetAllAsync();
+
+            IEnumerable<Service> servicesWithFullPuthToLogos = GetServicesWithFullPuthToLogos(services);
+
             return View(Mapper.Map<IEnumerable<ServiceViewModel>>(services));
         }
 
@@ -99,6 +103,26 @@ namespace RAP.UI.Controllers
             {
                 return View();
             }
+        }
+
+        private IEnumerable<Service> GetServicesWithFullPuthToLogos(IEnumerable<Service> services)
+        {
+            string puth = WebConfigurationManager.AppSettings.GetValues("PuthToServiceLogos").First();
+
+            var servicesToArray = services.ToArray();
+
+            for (int i = 0; i < servicesToArray.Length; i++)
+            {
+                servicesToArray[i].Logo = puth + servicesToArray[i].Logo;
+            }
+            
+            return servicesToArray;
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }
