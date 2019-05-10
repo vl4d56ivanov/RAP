@@ -36,7 +36,10 @@
     {
         <tr>
             <td>
-                <img src=@item.Logo alt=@item.Name width="60" />
+                @if (item.Logo != null)
+                {
+                    <img src=@item.Logo alt=@item.Name width="60" />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)

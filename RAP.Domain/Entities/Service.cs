@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public string Logo { get; set; }
 
-        public int SrviceTypeId { get; set; }
+        public int ServiceTypeId { get; set; }
         public ServiceType ServiceType { get; set; }
     }
 }

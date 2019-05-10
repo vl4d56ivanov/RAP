@@ -32,7 +32,7 @@ namespace RAP.Domain.Repositories
 
         public void Create(Service item)
         {
-            throw new NotImplementedException();
+            db.Services.Add(item);
         }
 
         public void Update(Service item)

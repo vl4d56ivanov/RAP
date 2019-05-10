@@ -10,6 +10,8 @@ using RAP.Domain.Entities;
 using AutoMapper;
 using RAP.UI.Models;
 using System.Web.Configuration;
+using System.IO;
+using RAP.Domain.Util;
 
 namespace RAP.UI.Controllers
 {
@@ -26,9 +28,9 @@ namespace RAP.UI.Controllers
         // GET: Services
         public async Task<ActionResult> Index()
         {
-            IEnumerable <Service> services = await unitOfWork.Services.GetAllAsync();
+            IEnumerable<Service> services = await unitOfWork.Services.GetAllAsync();
 
-            IEnumerable<Service> servicesWithFullPuthToLogos = GetServicesWithFullPuthToLogos(services);
+            IEnumerable<Service> servicesWithFullPuthToLogos = GetServicesWithFullPathToLogos(services);
 
             return View(Mapper.Map<IEnumerable<ServiceViewModel>>(services));
         }
@@ -40,25 +42,54 @@ namespace RAP.UI.Controllers
         }
 
         // GET: Services/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            ViewBag.ServiceTypeId = new SelectList(await unitOfWork.ServiceTypes.GetAllAsync(), "Id", "Name");
+
             return View();
         }
 
         // POST: Services/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public async Task<ActionResult> Create(ServiceViewModel serviceViewModel, HttpPostedFileBase logo)
         {
-            try
+            string nameLogo = null;
+
+            if (logo != null)
             {
-                // TODO: Add insert logic here
+                string extension = Path.GetExtension(logo.FileName);
+
+                List<string> validExtensions = new List<string>() { ".jpg", ".png" };
+                if (!validExtensions.Contains(extension))
+                {
+                    ModelState.AddModelError("Logo", "Logo must have an extension - .jpg, .png.");
+                }
+
+                nameLogo = serviceViewModel.Name + "_" + DateTime.Now.ToShortDateString() + extension;             
+            }
+
+            serviceViewModel.Logo = nameLogo;
+
+            if (ModelState.IsValid)
+            {
+                if (logo != null)
+                {
+                    string pathToServiceLogos = WebConfigurationManager.AppSettings.GetValues("PathToServiceLogos").First();
+                    logo.SaveAs(Server.MapPath("~\\" + pathToServiceLogos + nameLogo));
+                }
+                    
+                Service service = Mapper.Map<Service>(serviceViewModel);
+                unitOfWork.Services.Create(service);
+                await unitOfWork.SaveAsync();
+
+                LoggerManager.Log.Info($"Created new Service: {serviceViewModel.Name}.");
 
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.ServiceTypeId = new SelectList(await unitOfWork.ServiceTypes.GetAllAsync(), "Id", "Name", 
+                                                        serviceViewModel.ServiceTypeId);
+            return View();
         }
 
         // GET: Services/Edit/5
@@ -105,17 +136,18 @@ namespace RAP.UI.Controllers
             }
         }
 
-        private IEnumerable<Service> GetServicesWithFullPuthToLogos(IEnumerable<Service> services)
+        private IEnumerable<Service> GetServicesWithFullPathToLogos(IEnumerable<Service> services)
         {
-            string puth = WebConfigurationManager.AppSettings.GetValues("PuthToServiceLogos").First();
+            string path = WebConfigurationManager.AppSettings.GetValues("PathToServiceLogos").First();
 
             var servicesToArray = services.ToArray();
 
             for (int i = 0; i < servicesToArray.Length; i++)
             {
-                servicesToArray[i].Logo = puth + servicesToArray[i].Logo;
+                if(servicesToArray[i].Logo != null)
+                    servicesToArray[i].Logo = path + servicesToArray[i].Logo;
             }
-            
+
             return servicesToArray;
         }
 

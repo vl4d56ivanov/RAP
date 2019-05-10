@@ -34,9 +34,6 @@ namespace RAP.UI.Controllers
         // GET: Patients/Create
         public async Task<ActionResult> Create()
         {
-            //TODO:For DropDownList Address
-            //ViewBag.AddressList = new SelectList(await unitOfWork.Addresses.GetAllAsync(), "AddressId", "City");
-
             return View();
         }
 
@@ -79,7 +76,6 @@ namespace RAP.UI.Controllers
                 return RedirectToAction("Index");
             }
 
-            //ViewBag.AddressId = new SelectList(await unitOfWork.Addresses.GetAllAsync(), "AddressId", "City", patientViewModel.AddressId);
             return View(patientViewModel);
         }
 

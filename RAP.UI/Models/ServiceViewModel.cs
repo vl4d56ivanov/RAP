@@ -11,7 +11,8 @@ namespace RAP.UI.Models
         public string Description { get; set; }
         public string Logo { get; set; }
 
-        public int SrviceTypeId { get; set; }
+        [Display(Name = "Service type")]
+        public int ServiceTypeId { get; set; }
 
         [Display(Name = "Service type")]
         public ServiceTypeViewModel ServiceType { get; set; }
