@@ -6,7 +6,7 @@ using System.Data.Entity;
 
 namespace RAP.Domain.Identity
 {
-    public class InitializationRapDb : DropCreateDatabaseAlways<ApplicationDbContext>
+    public class InitializationRapDb : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext db)
         {
@@ -19,8 +19,8 @@ namespace RAP.Domain.Identity
             //TODO: Added default user with Admin role.
             var admin = new ApplicationUser
             {
-                Email = "admin@rap.com",
-                UserName = "admin@rap.com",
+                Email = "Rapdevelop@gmail.com",
+                UserName = "Rapdevelop@gmail.com",
             };
             admin.EmailConfirmed = true;
             string password = "Qwe_123";
