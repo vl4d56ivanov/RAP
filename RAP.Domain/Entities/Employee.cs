@@ -16,5 +16,12 @@ namespace RAP.Domain.Entities
         public string Phone { get; set; }
         public string Position { get; set; }
         public string AccessLevel { get; set; }
+
+        public ICollection<Appointment> Appointments { get; set; }
+
+        public Employee()
+        {
+            Appointments = new List<Appointment>();
+        }
     }
 }

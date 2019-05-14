@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RAP.Domain.Entities
@@ -16,5 +17,12 @@ namespace RAP.Domain.Entities
 
         public int? Address2Id { get; set; }
         public Address Address2 { get; set; }
+
+        public ICollection<Appointment> Appointments { get; set; }
+
+        public Patient()
+        {
+            Appointments = new List<Appointment>();
+        }
     }
 }

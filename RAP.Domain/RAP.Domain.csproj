@@ -92,6 +92,7 @@
     <Compile Include="Interfaces\IBaseRepository.cs" />
     <Compile Include="Interfaces\IGridsImagesService.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Repositories\AppointmentsRepository.cs" />
     <Compile Include="Repositories\PatientsRepository.cs" />
     <Compile Include="Repositories\ServicesRepository.cs" />
     <Compile Include="Services\GridsImagesService.cs" />

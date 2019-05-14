@@ -1,4 +1,6 @@
-﻿namespace RAP.Domain.Entities
+﻿using System.Collections.Generic;
+
+namespace RAP.Domain.Entities
 {
     public class Service
     {
@@ -9,5 +11,12 @@
 
         public int ServiceTypeId { get; set; }
         public ServiceType ServiceType { get; set; }
+
+        public ICollection<Appointment> Appointments { get; set; }
+
+        public Service()
+        {
+            Appointments = new List<Appointment>();
+        }
     }
 }

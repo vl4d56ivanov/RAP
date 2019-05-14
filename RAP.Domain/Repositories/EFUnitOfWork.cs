@@ -10,13 +10,13 @@ namespace RAP.Domain.Repositories
     {
         ApplicationDbContext db;
 
-        BaseRepository<Address>     addressRepository;
-        BaseRepository<Appointment> appointmentRepository;         //AppointmentsRepossitory
+        BaseRepository<Address>     addressRepository;            
         BaseRepository<Employee>    employeeRepository;            //EmployeesRepository
         BaseRepository<ServiceType> serviceTypeRepository;
 
-        PatientsRepository patientRepository;
-        ServicesRepository serviceRepository;
+        AppointmentsRepository appointmentRepository;
+        PatientsRepository     patientRepository;
+        ServicesRepository     serviceRepository;
 
         public EFUnitOfWork()
         {
@@ -50,7 +50,7 @@ namespace RAP.Domain.Repositories
             get
             {
                 if (appointmentRepository == null)
-                    appointmentRepository = new BaseRepository<Appointment>(db);
+                    appointmentRepository = new AppointmentsRepository(db);
 
                 return appointmentRepository;
             }

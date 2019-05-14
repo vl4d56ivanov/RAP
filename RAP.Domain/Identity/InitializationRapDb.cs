@@ -35,22 +35,27 @@ namespace RAP.Domain.Identity
             Address a1 = new Address { City = "London", Street = "Green str.", Home = "8a", Flat = "16" };
             Address a2 = new Address { City = "York", Street = "Ellow str.", Home = "88a", Flat = "16" };
             Address a3 = new Address { City = "New York" };
-
             db.Address.AddRange(new List<Address> { a1, a2, a3 });
-            db.Patients.Add(new Patient { FName = "John", LName = "Snow", Address = a1, Address2 = a2 });
+
+            Patient patient1 = new Patient { FName = "John", LName = "Snow", Address = a1, Address2 = a2 };
+            db.Patients.Add(patient1);
 
             ServiceType sT1 = new ServiceType { Name = "TypeOne" };
             ServiceType sT2 = new ServiceType { Name = "TypeTwo" };
             db.ServiceTypes.AddRange(new List<ServiceType> { sT1, sT2 });
 
-            db.Services.Add(new Service { Name = "ServiceOne", ServiceType = sT1, Logo = "ServiceOne_08.05.19.jpg" });
-            db.Services.Add(new Service { Name = "ServiceTwo", ServiceType = sT2, Logo = "ServiceTwo_08.05.19.jpg" });
-            db.Services.Add(new Service { Name = "ServiceThree", ServiceType = sT1, Logo = "ServiceThree_08.05.19.jpg" });
+            Service service1 = new Service { Name = "ServiceOne", ServiceType = sT1, Logo = "ServiceOne_08.05.19.jpg" };
+            Service service2 = new Service { Name = "ServiceTwo", ServiceType = sT2, Logo = "ServiceTwo_08.05.19.jpg" };
+            Service service3 = new Service { Name = "ServiceThree", ServiceType = sT1, Logo = "ServiceThree_08.05.19.jpg" };
+            db.Services.AddRange(new List<Service> { service1, service2, service3 });
 
-            db.Employees.AddRange(new List<Employee>
+            Employee employee1 = new Employee { Photo = "EmployeeBob_14.05.2019.jpg", FName = "Bob", LName = "Lee", Phone = "+001 123 456 7890" };
+            Employee employee2 = new Employee { FName = "Greg", LName = "White", Phone = "+007 987 456 7890" };
+            db.Employees.AddRange(new List<Employee> { employee1, employee2 });
+
+            db.Appointments.AddRange(new List<Appointment>
             {
-                new Employee{Photo = "EmployeeBob_14.05.2019.jpg", FName = "Bob", LName = "Lee", Phone = "+001 123 456 7890"},
-                new Employee{FName = "Greg", LName = "White", Phone = "+007 987 456 7890"}
+                new Appointment{Title = "TitleOne", Patient = patient1, Service = service1, Employee = employee1, Description = "Text text text..."}
             });
 
             base.Seed(db);

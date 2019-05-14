@@ -16,6 +16,10 @@ namespace RAP.UI
             {
                 //cfg.CreateMap<PatientViewModel, Patient>();
                 cfg.CreateMap<AddressViewModel, Address>();
+                //cfg.CreateMap<AppointmentViewModel, Appointment>();
+                //cfg.CreateMap<PatientViewModel, Patient>();
+                //cfg.CreateMap<ServiceViewModel, Service>();
+                //cfg.CreateMap<EmployeeViewModel, Employee>();
             });
         }
     }
