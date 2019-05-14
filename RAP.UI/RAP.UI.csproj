@@ -405,6 +405,8 @@
     <Content Include="Content\DataTables\images\sort_desc.png" />
     <Content Include="Content\DataTables\images\sort_desc_disabled.png" />
     <Content Include="Content\DataTables\swf\flashExport.swf" />
+    <Content Include="Content\EmployeePhotos\DefaultEmployeePhoto.jpg" />
+    <Content Include="Content\EmployeePhotos\EmployeeBob_14.05.2019.jpg" />
     <Content Include="Content\IntlTelInput_css\demo.css" />
     <Content Include="Content\IntlTelInput_css\intlTelInput.css" />
     <Content Include="Content\IntlTelInput_css\intlTelInput.min.css" />

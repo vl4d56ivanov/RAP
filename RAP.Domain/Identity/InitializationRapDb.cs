@@ -6,7 +6,7 @@ using System.Data.Entity;
 
 namespace RAP.Domain.Identity
 {
-    public class InitializationRapDb : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
+    public class InitializationRapDb : DropCreateDatabaseAlways<ApplicationDbContext>
     {
         protected override void Seed(ApplicationDbContext db)
         {
@@ -49,7 +49,8 @@ namespace RAP.Domain.Identity
 
             db.Employees.AddRange(new List<Employee>
             {
-                new Employee{FName = "Bob", LName = "Lee", Phone = "+001 123 456 7890"}
+                new Employee{Photo = "EmployeeBob_14.05.2019.jpg", FName = "Bob", LName = "Lee", Phone = "+001 123 456 7890"},
+                new Employee{FName = "Greg", LName = "White", Phone = "+007 987 456 7890"}
             });
 
             base.Seed(db);

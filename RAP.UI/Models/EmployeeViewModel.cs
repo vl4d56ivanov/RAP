@@ -20,14 +20,17 @@ namespace RAP.UI.Models
         [Display(Name = "Last Name")]
         public string LName { get; set; }
 
-        [Display(Name = "Midddle Name")]
+        [Display(Name = "Middle Name")]
         public string MName { get; set; }
 
         [Required]
         [Display(Name = "Phone")]
         public string Phone { get; set; }
 
+        [Display(Name = "Position")]
         public string Position { get; set; }
+
+        [Display(Name = "Access Level")]
         public string AccessLevel { get; set; }
     }
 }

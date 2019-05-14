@@ -44,7 +44,18 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Photo)
+                @if (item.Photo != null)
+                {
+                    string fullPath = ViewBag.PathToDirectory + item.Photo;
+
+                    <img src=@fullPath width="60" />
+                }
+                else
+                {
+                    string fullPath = ViewBag.PathToDirectory + "DefaultEmployeePhoto.jpg";
+
+                    <img src=@fullPath width="60" />
+                }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.FName)

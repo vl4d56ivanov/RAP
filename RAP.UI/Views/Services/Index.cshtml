@@ -33,12 +33,14 @@
     </tr>
 
     @foreach (var item in Model)
-    {
+    {      
         <tr>
             <td>
                 @if (item.Logo != null)
                 {
-                    <img src=@item.Logo alt=@item.Name width="60" />
+                    string fullPath = ViewBag.PathToDirectory + item.Logo;
+
+                    <img src=@fullPath alt=@item.Name width="60" />
                 }
             </td>
             <td>

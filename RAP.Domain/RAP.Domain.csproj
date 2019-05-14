@@ -69,6 +69,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -89,9 +90,11 @@
     <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Identity\InitializationRapDb.cs" />
     <Compile Include="Interfaces\IBaseRepository.cs" />
+    <Compile Include="Interfaces\IGridsImagesService.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Repositories\PatientsRepository.cs" />
     <Compile Include="Repositories\ServicesRepository.cs" />
+    <Compile Include="Services\GridsImagesService.cs" />
     <Compile Include="Util\LoggerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />

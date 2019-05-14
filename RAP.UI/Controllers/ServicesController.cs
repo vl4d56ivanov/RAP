@@ -12,25 +12,30 @@ using RAP.UI.Models;
 using System.Web.Configuration;
 using System.IO;
 using RAP.Domain.Util;
+using RAP.Domain.Services;
 
 namespace RAP.UI.Controllers
 {
     [Authorize(Roles = "admin")]
     public class ServicesController : Controller
     {
-        IUnitOfWork unitOfWork;
+        private const string keyAppSettings = "PathToServiceLogos";
+
+        private IUnitOfWork unitOfWork;
+        private IGridsImagesService gridsImagesService;
 
         public ServicesController()
         {
             unitOfWork = new EFUnitOfWork();
+            gridsImagesService = new GridsImagesService();
         }
 
         // GET: Services
         public async Task<ActionResult> Index()
         {
-            IEnumerable<Service> services = await unitOfWork.Services.GetAllAsync();
+            ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings);
 
-            IEnumerable<Service> servicesWithFullPuthToLogos = GetServicesWithFullPathToLogos(services);
+            IEnumerable<Service> services = await unitOfWork.Services.GetAllAsync();
 
             return View(Mapper.Map<IEnumerable<ServiceViewModel>>(services));
         }
@@ -134,21 +139,6 @@ namespace RAP.UI.Controllers
             {
                 return View();
             }
-        }
-
-        private IEnumerable<Service> GetServicesWithFullPathToLogos(IEnumerable<Service> services)
-        {
-            string path = WebConfigurationManager.AppSettings.GetValues("PathToServiceLogos").First();
-
-            var servicesToArray = services.ToArray();
-
-            for (int i = 0; i < servicesToArray.Length; i++)
-            {
-                if(servicesToArray[i].Logo != null)
-                    servicesToArray[i].Logo = path + servicesToArray[i].Logo;
-            }
-
-            return servicesToArray;
         }
 
         protected override void Dispose(bool disposing)

@@ -2,6 +2,7 @@
 using RAP.Domain.Entities;
 using RAP.Domain.Interfaces;
 using RAP.Domain.Repositories;
+using RAP.Domain.Services;
 using RAP.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -15,16 +16,22 @@ namespace RAP.UI.Controllers
     [Authorize(Roles = "admin")]
     public class EmployeesController : Controller
     {
-        IUnitOfWork unitOfWork;
+        private const string keyAppSettings = "PathToEmployeePhotos";
+
+        private IUnitOfWork unitOfWork;
+        private IGridsImagesService gridsImagesService;
 
         public EmployeesController()
         {
             unitOfWork = new EFUnitOfWork();
+            gridsImagesService = new GridsImagesService();
         }
 
         // GET: Employees
         public async Task<ActionResult> Index()
         {
+            ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings); ;
+
             IEnumerable<EmployeeViewModel> employeeViewModels = Mapper.Map<IEnumerable<EmployeeViewModel>>(await unitOfWork.Employees.GetAllAsync());
 
             return View(employeeViewModels);
