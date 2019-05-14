@@ -38,10 +38,12 @@ namespace RAP.UI.Controllers
         }
 
         //// GET: Employees/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
+        public async Task<ActionResult> Details(int id)
+        {
+            Employee employee = await unitOfWork.Employees.GetById(id);
+
+            return View(Mapper.Map<EmployeeViewModel>(employee));
+        }
 
         //// GET: Employees/Create
         //public ActionResult Create()

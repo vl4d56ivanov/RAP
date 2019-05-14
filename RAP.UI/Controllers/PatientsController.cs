@@ -80,10 +80,12 @@ namespace RAP.UI.Controllers
         }
 
         // GET: Patients/Details/5
-        //public ActionResult Details(int id)
-        //{
-        //    return View();
-        //}
+        public async Task<ActionResult> Details(int id)
+        {
+            Patient patient = await unitOfWork.Patients.GetById(id);
+
+            return View(Mapper.Map<PatientViewModel>(patient));
+        }
 
 
 

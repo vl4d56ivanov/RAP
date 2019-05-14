@@ -41,9 +41,11 @@ namespace RAP.UI.Controllers
         }
 
         // GET: Services/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int id)
         {
-            return View();
+            Service service = await unitOfWork.Services.GetById(id);
+
+            return View(Mapper.Map<ServiceViewModel>(service));
         }
 
         // GET: Services/Create

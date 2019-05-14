@@ -12,6 +12,7 @@ using System.Web.Mvc;
 
 namespace RAP.UI.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class AppointmentsController : Controller
     {
         IUnitOfWork unitOfWork;

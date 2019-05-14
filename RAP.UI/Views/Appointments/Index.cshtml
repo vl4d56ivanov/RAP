@@ -5,6 +5,10 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@section styles{
+    @Styles.Render("~/Content/datatables")
+}
+
 <h2>Appointments List</h2>
 
 <p>
@@ -30,29 +34,34 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.ActionLink(item.Patient.FName + " " + item.Patient.LName, "Details", "Patients", new { id = item.PatientId})
-        </td>
-        <td>
-            @Html.ActionLink(item.Service.Name, "Details", "Services", new { id = item.ServiceId })
-        </td>
-        <td>
-            @Html.ActionLink(item.Employee.FName + " " + item.Employee.LName, "Details", "Employees", new { id = item.EmployeeId })
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        @*<td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>*@
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.ActionLink(item.Patient.FName + " " + item.Patient.LName, "Details", "Patients", new { id = item.PatientId }, null)
+            </td>
+            <td>
+                @Html.ActionLink(item.Service.Name, "Details", "Services", new { id = item.ServiceId }, null)
+            </td>
+            <td>
+                @Html.ActionLink(item.Employee.FName + " " + item.Employee.LName, "Details", "Employees", new { id = item.EmployeeId }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            @*<td>
+                    @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+                </td>*@
+        </tr>
+    }
 
 </table>
+
+@section scripts{
+    @Scripts.Render("~/bundles/datatables")
+}

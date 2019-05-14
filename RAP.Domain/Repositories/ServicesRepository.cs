@@ -25,9 +25,9 @@ namespace RAP.Domain.Repositories
             return await db.Services.Include(s => s.ServiceType).ToListAsync();
         }
 
-        public Task<Service> GetById(int id)
+        public async Task<Service> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await db.Services.Include(s => s.ServiceType).FirstOrDefaultAsync(s => s.Id == id);
         }
 
         public void Create(Service item)
