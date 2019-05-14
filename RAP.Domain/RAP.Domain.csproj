@@ -78,6 +78,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Address.cs" />
+    <Compile Include="Entities\Appointment.cs" />
+    <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\Patient.cs" />
     <Compile Include="Entities\Service.cs" />
     <Compile Include="Entities\ServiceType.cs" />

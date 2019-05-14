@@ -47,6 +47,11 @@ namespace RAP.Domain.Identity
             db.Services.Add(new Service { Name = "ServiceTwo", ServiceType = sT2, Logo = "ServiceTwo_08.05.19.jpg" });
             db.Services.Add(new Service { Name = "ServiceThree", ServiceType = sT1, Logo = "ServiceThree_08.05.19.jpg" });
 
+            db.Employees.AddRange(new List<Employee>
+            {
+                new Employee{FName = "Bob", LName = "Lee", Phone = "+001 123 456 7890"}
+            });
+
             base.Seed(db);
         }
     }

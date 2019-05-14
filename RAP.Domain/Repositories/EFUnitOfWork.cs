@@ -2,9 +2,6 @@
 using RAP.Domain.Identity;
 using RAP.Domain.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RAP.Domain.Repositories
@@ -12,9 +9,13 @@ namespace RAP.Domain.Repositories
     public class EFUnitOfWork : IUnitOfWork
     {
         ApplicationDbContext db;
-        PatientsRepository patientRepository;
-        BaseRepository<Address> addressRepository;
+
+        BaseRepository<Address>     addressRepository;
+        BaseRepository<Appointment> appointmentRepository;         //AppointmentsRepossitory
+        BaseRepository<Employee>    employeeRepository;            //EmployeesRepository
         BaseRepository<ServiceType> serviceTypeRepository;
+
+        PatientsRepository patientRepository;
         ServicesRepository serviceRepository;
 
         public EFUnitOfWork()
@@ -41,6 +42,28 @@ namespace RAP.Domain.Repositories
                     addressRepository = new BaseRepository<Address>(db);
 
                 return addressRepository;
+            }
+        }
+
+        public IBaseRepository<Appointment> Appointments
+        {
+            get
+            {
+                if (appointmentRepository == null)
+                    appointmentRepository = new BaseRepository<Appointment>(db);
+
+                return appointmentRepository;
+            }
+        }
+
+        public IBaseRepository<Employee> Employees
+        {
+            get
+            {
+                if (employeeRepository == null)
+                    employeeRepository = new BaseRepository<Employee>(db);
+
+                return employeeRepository;
             }
         }
 
