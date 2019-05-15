@@ -96,6 +96,7 @@
     <Compile Include="Repositories\PatientsRepository.cs" />
     <Compile Include="Repositories\ServicesRepository.cs" />
     <Compile Include="Services\GridsImagesService.cs" />
+    <Compile Include="Util\AccessLevel.cs" />
     <Compile Include="Util\LoggerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\BaseRepository.cs" />

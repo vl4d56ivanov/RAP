@@ -49,8 +49,8 @@ namespace RAP.Domain.Identity
             Service service3 = new Service { Name = "ServiceThree", ServiceType = sT1, Logo = "ServiceThree_08.05.19.jpg" };
             db.Services.AddRange(new List<Service> { service1, service2, service3 });
 
-            Employee employee1 = new Employee { Photo = "EmployeeBob_14.05.2019.jpg", FName = "Bob", LName = "Lee", Phone = "+001 123 456 7890" };
-            Employee employee2 = new Employee { FName = "Greg", LName = "White", Phone = "+007 987 456 7890" };
+            Employee employee1 = new Employee { Photo = "EmployeeBob_14.05.2019.jpg", FName = "Bob", LName = "Lee", Phone = "+001 123 456 7890", AccessLevel = Util.AccessLevel.One };
+            Employee employee2 = new Employee { FName = "Greg", LName = "White", Phone = "+007 987 456 7890", AccessLevel = Util.AccessLevel.Two };
             db.Employees.AddRange(new List<Employee> { employee1, employee2 });
 
             db.Appointments.AddRange(new List<Appointment>

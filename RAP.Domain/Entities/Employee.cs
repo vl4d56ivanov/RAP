@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RAP.Domain.Util;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace RAP.Domain.Entities
         public string MName { get; set; }
         public string Phone { get; set; }
         public string Position { get; set; }
-        public string AccessLevel { get; set; }
+        public AccessLevel AccessLevel { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
 

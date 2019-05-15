@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RAP.Domain.Util;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -31,6 +32,6 @@ namespace RAP.UI.Models
         public string Position { get; set; }
 
         [Display(Name = "Access Level")]
-        public string AccessLevel { get; set; }
+        public AccessLevel AccessLevel { get; set; }
     }
 }
