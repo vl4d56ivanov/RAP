@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace RAP.UI.Models
 {
@@ -16,5 +17,7 @@ namespace RAP.UI.Models
 
         [Display(Name = "Service type")]
         public ServiceTypeViewModel ServiceType { get; set; }
+
+        public ICollection<AppointmentViewModel> Appointments { get; set; }
     }
 }

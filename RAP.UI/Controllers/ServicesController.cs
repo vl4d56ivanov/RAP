@@ -13,6 +13,7 @@ using System.Web.Configuration;
 using System.IO;
 using RAP.Domain.Util;
 using RAP.Domain.Services;
+using System.Net;
 
 namespace RAP.UI.Controllers
 {
@@ -69,24 +70,22 @@ namespace RAP.UI.Controllers
 
             if (logo != null)
             {
-                string extension = Path.GetExtension(logo.FileName);
-
-                List<string> validExtensions = new List<string>() { ".jpg", ".png" };
-                if (!validExtensions.Contains(extension))
+                if (!gridsImagesService.IsGetAndValidExtencion(ref nameLogo, logo.FileName))
                 {
                     ModelState.AddModelError("Logo", "Logo must have an extension - .jpg, .png.");
                 }
 
-                nameLogo = serviceViewModel.Name + "_" + DateTime.Now.ToShortDateString() + extension;             
+                nameLogo = serviceViewModel.Name + "_" + DateTime.Now.ToShortDateString() + nameLogo;             
             }
 
             serviceViewModel.Logo = nameLogo;
-
+            
             if (ModelState.IsValid)
             {
+                //TODO: Transaction???
                 if (logo != null)
                 {
-                    string pathToServiceLogos = WebConfigurationManager.AppSettings.GetValues("PathToServiceLogos").First();
+                    string pathToServiceLogos = gridsImagesService.GetPathToDirectory(keyAppSettings);
                     logo.SaveAs(Server.MapPath("~\\" + pathToServiceLogos + nameLogo));
                 }
                     
@@ -105,25 +104,68 @@ namespace RAP.UI.Controllers
         }
 
         // GET: Services/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Service service = await unitOfWork.Services.GetById(id.Value);
+            if (service == null)
+            {
+                return HttpNotFound();
+            }
+
+            ViewBag.ServiceTypeId = new SelectList(await unitOfWork.ServiceTypes.GetAllAsync(), "Id", "Name");
+            ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings);
+
+            return View(Mapper.Map<ServiceViewModel>(service));
         }
 
         // POST: Services/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public async Task<ActionResult> Edit(ServiceViewModel serviceViewModel, HttpPostedFileBase logo)
         {
-            try
+            Service serviceFromForm = Mapper.Map<Service>(serviceViewModel);
+
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                if (logo == null)
+                {
+                    Service serviceFromDb = await unitOfWork.Services.GetById(serviceViewModel.Id);
+                    serviceFromDb.Name = serviceFromForm.Name;
+                    serviceFromDb.Description = serviceFromForm.Description;
+                    serviceFromDb.ServiceTypeId = serviceFromForm.ServiceTypeId;
+
+                    unitOfWork.Services.Update(serviceFromDb);
+                    await unitOfWork.SaveAsync();
+                }
+                else
+                {
+                    string nameLogo = null;
+
+                    if (!gridsImagesService.IsGetAndValidExtencion(ref nameLogo, logo.FileName))
+                    {
+                        ModelState.AddModelError("Logo", "Logo must have an extension - .jpg, .png.");
+                    }
+
+                    nameLogo = serviceViewModel.Name + "_" + DateTime.Now.ToShortDateString() + nameLogo;
+
+                    serviceFromForm.Logo = nameLogo;
+
+                    string pathToServiceLogos = gridsImagesService.GetPathToDirectory(keyAppSettings);
+                    logo.SaveAs(Server.MapPath("~\\" + pathToServiceLogos + nameLogo));
+
+                    unitOfWork.Services.Update(serviceFromForm);
+                    await unitOfWork.SaveAsync();
+                }
+                LoggerManager.Log.Info($"Updated Service: {serviceViewModel.Name}.");
 
                 return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.ServiceTypeId = new SelectList(await unitOfWork.ServiceTypes.GetAllAsync(), "Id", "Name",
+                                                        serviceViewModel.ServiceTypeId);
+            return View(serviceViewModel);
         }
 
         // GET: Services/Delete/5
@@ -138,7 +180,6 @@ namespace RAP.UI.Controllers
         {
             try
             {
-                // TODO: Add delete logic here
 
                 return RedirectToAction("Index");
             }

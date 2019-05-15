@@ -35,5 +35,7 @@ namespace RAP.UI.Models
 
         [Display(Name = "Address 2")]
         public AddressViewModel Address2 { get; set; }
+
+        public ICollection<AppointmentViewModel> Appointments { get; set; }
     }
 }

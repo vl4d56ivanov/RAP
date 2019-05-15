@@ -37,7 +37,7 @@ namespace RAP.Domain.Repositories
 
         public void Update(Service item)
         {
-            throw new NotImplementedException();
+            db.Entry(item).State = EntityState.Modified;
         }
 
         public Task Delete(int id)

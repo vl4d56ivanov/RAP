@@ -33,5 +33,7 @@ namespace RAP.UI.Models
 
         [Display(Name = "Access Level")]
         public AccessLevel AccessLevel { get; set; }
+
+        public ICollection<AppointmentViewModel> Appointments { get; set; }
     }
 }
