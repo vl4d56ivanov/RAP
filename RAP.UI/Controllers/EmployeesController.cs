@@ -28,13 +28,18 @@ namespace RAP.UI.Controllers
         }
 
         // GET: Employees
+        [OverrideAuthorization]
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings); ;
 
             IEnumerable<EmployeeViewModel> employeeViewModels = Mapper.Map<IEnumerable<EmployeeViewModel>>(await unitOfWork.Employees.GetAllAsync());
 
-            return View(employeeViewModels);
+            if (HttpContext.User.IsInRole("admin"))
+                return View(employeeViewModels);
+
+            return View("IndexClient", employeeViewModels);
         }
 
         //// GET: Employees/Details/5

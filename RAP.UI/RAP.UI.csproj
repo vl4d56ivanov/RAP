@@ -570,6 +570,9 @@
     <Content Include="Views\Employees\Details.cshtml" />
     <Content Include="Views\Patients\Details.cshtml" />
     <Content Include="Views\Services\Details.cshtml" />
+    <Content Include="Views\Home\Client.cshtml" />
+    <Content Include="Views\Employees\IndexClient.cshtml" />
+    <Content Include="Views\Services\IndexClient.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

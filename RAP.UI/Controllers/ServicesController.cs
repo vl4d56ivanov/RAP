@@ -31,13 +31,18 @@ namespace RAP.UI.Controllers
         }
 
         // GET: Services
+        [OverrideAuthorization]
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings);
 
-            IEnumerable<Service> services = await unitOfWork.Services.GetAllAsync();
+            IEnumerable<ServiceViewModel> serviceViewModels = Mapper.Map<IEnumerable<ServiceViewModel>>(await unitOfWork.Services.GetAllAsync());
 
-            return View(Mapper.Map<IEnumerable<ServiceViewModel>>(services));
+            if (HttpContext.User.IsInRole("admin"))
+                return View(serviceViewModels);
+
+            return View("IndexClient", serviceViewModels);
         }
 
         // GET: Services/Details/5
