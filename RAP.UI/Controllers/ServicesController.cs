@@ -75,7 +75,7 @@ namespace RAP.UI.Controllers
                     ModelState.AddModelError("Logo", "Logo must have an extension - .jpg, .png.");
                 }
 
-                nameLogo = serviceViewModel.Name + "_" + DateTime.Now.ToShortDateString() + nameLogo;             
+                nameLogo = serviceViewModel.Name + "_" + Guid.NewGuid().ToString() + nameLogo;    //DateTime.Now.ToShortDateString()         
             }
 
             serviceViewModel.Logo = nameLogo;
@@ -128,11 +128,12 @@ namespace RAP.UI.Controllers
         {
             Service serviceFromForm = Mapper.Map<Service>(serviceViewModel);
 
+            Service serviceFromDb = await unitOfWork.Services.GetById(serviceViewModel.Id);
+
             if (ModelState.IsValid)
             {
                 if (logo == null)
                 {
-                    Service serviceFromDb = await unitOfWork.Services.GetById(serviceViewModel.Id);
                     serviceFromDb.Name = serviceFromForm.Name;
                     serviceFromDb.Description = serviceFromForm.Description;
                     serviceFromDb.ServiceTypeId = serviceFromForm.ServiceTypeId;
@@ -149,14 +150,24 @@ namespace RAP.UI.Controllers
                         ModelState.AddModelError("Logo", "Logo must have an extension - .jpg, .png.");
                     }
 
-                    nameLogo = serviceViewModel.Name + "_" + DateTime.Now.ToShortDateString() + nameLogo;
-
-                    serviceFromForm.Logo = nameLogo;
+                    nameLogo = serviceViewModel.Name + "_" + Guid.NewGuid().ToString() + nameLogo;
 
                     string pathToServiceLogos = gridsImagesService.GetPathToDirectory(keyAppSettings);
+
+                    if(serviceFromDb.Logo != null)
+                    {
+                        FileInfo oldLogo = new FileInfo(Server.MapPath("~\\" + pathToServiceLogos + serviceFromDb.Logo));
+                        if (oldLogo.Exists)
+                            oldLogo.Delete();
+                    }
                     logo.SaveAs(Server.MapPath("~\\" + pathToServiceLogos + nameLogo));
 
-                    unitOfWork.Services.Update(serviceFromForm);
+                    serviceFromDb.Name = serviceFromForm.Name;
+                    serviceFromDb.Description = serviceFromForm.Description;
+                    serviceFromDb.ServiceTypeId = serviceFromForm.ServiceTypeId;
+                    serviceFromDb.Logo = nameLogo;
+
+                    unitOfWork.Services.Update(serviceFromDb);
                     await unitOfWork.SaveAsync();
                 }
                 LoggerManager.Log.Info($"Updated Service: {serviceViewModel.Name}.");
