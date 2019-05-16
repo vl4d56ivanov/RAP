@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    string fullPath = "/" + ViewBag.PathToDirectory + Model.Photo;
 }
 
 <h2>Details</h2>
@@ -11,13 +13,6 @@
     <h4>EmployeeViewModel</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Photo)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Photo)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.FName)
@@ -65,6 +60,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.AccessLevel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Photo)
+        </dt>
+
+        <dd>
+            <img src=@fullPath width="100" />
         </dd>
 
     </dl>

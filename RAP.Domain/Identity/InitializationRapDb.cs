@@ -37,7 +37,7 @@ namespace RAP.Domain.Identity
             Address a3 = new Address { City = "New York" };
             db.Address.AddRange(new List<Address> { a1, a2, a3 });
 
-            Patient patient1 = new Patient { FName = "John", LName = "Snow", Address = a1, Address2 = a2 };
+            Patient patient1 = new Patient { FName = "John", LName = "Snow", Phone = "+7 121 345 6776",  Address = a1, Address2 = a2 };
             db.Patients.Add(patient1);
 
             ServiceType sT1 = new ServiceType { Name = "TypeOne" };

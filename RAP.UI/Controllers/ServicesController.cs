@@ -51,6 +51,8 @@ namespace RAP.UI.Controllers
         {
             Service service = await unitOfWork.Services.GetById(id);
 
+            ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings);
+
             return View(Mapper.Map<ServiceViewModel>(service));
         }
 

@@ -28,6 +28,7 @@ namespace RAP.UI.Models
 
         public int? AddressId { get; set; }
 
+        //TODO: Added all address - string
         [Display(Name = "Address")]
         public AddressViewModel Address { get; set; }
 

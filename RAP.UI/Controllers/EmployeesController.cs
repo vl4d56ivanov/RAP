@@ -47,6 +47,8 @@ namespace RAP.UI.Controllers
         {
             Employee employee = await unitOfWork.Employees.GetById(id);
 
+            ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings);
+
             return View(Mapper.Map<EmployeeViewModel>(employee));
         }
 
