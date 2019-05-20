@@ -18,10 +18,12 @@ namespace RAP.UI.Models
         public int ServiceId { get; set; }
         public ServiceViewModel Service { get; set; }
 
+        [Required]
         [Display(Name = "Patient")]
         public int PatientId { get; set; }
         public PatientViewModel Patient { get; set; }
 
+        [Required]
         [Display(Name = "Employee")]
         public int EmployeeId { get; set; }
         public EmployeeViewModel Employee { get; set; }

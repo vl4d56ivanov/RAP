@@ -11,6 +11,9 @@ namespace RAP.Api.App_Start
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<AddressApiModel, Address>();
+                cfg.CreateMap<PatientApiModel, Patient>();
+                cfg.CreateMap<ServiceApiModel, Service>();
+                cfg.CreateMap<EmployeeApiModel, Employee>();
             });
         }
     }

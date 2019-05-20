@@ -100,12 +100,17 @@
   <ItemGroup>
     <Compile Include="App_Start\MapperConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AppointmentsController.cs" />
     <Compile Include="Controllers\PatientsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AddressApiModel.cs" />
+    <Compile Include="Models\AppointmentApiModel.cs" />
+    <Compile Include="Models\EmployeeApiModel.cs" />
     <Compile Include="Models\PatientApiModel.cs" />
+    <Compile Include="Models\ServiceApiModel.cs" />
+    <Compile Include="Models\ServiceTypeApiModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

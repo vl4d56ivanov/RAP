@@ -31,9 +31,15 @@ namespace RAP.Api.Controllers
         }
 
         // GET: api/Patients/5
-        public async Task<IHttpActionResult> Get(int id)
+        public async Task<IHttpActionResult> Get(int? id)
         {
-            PatientApiModel patient = Mapper.Map<PatientApiModel>(await unitOfWork.Patients.GetById(id));
+            if (id == null)
+                return BadRequest();
+
+            PatientApiModel patient = Mapper.Map<PatientApiModel>(await unitOfWork.Patients.GetById(id.Value));
+
+            if (patient == null)
+                return NotFound();
 
             return Json(patient);
         }
@@ -73,14 +79,23 @@ namespace RAP.Api.Controllers
         }
 
         // DELETE: api/Patients/5
-        public async Task<IHttpActionResult> Delete(int id)
+        public async Task<IHttpActionResult> Delete(int? id)
         {
-            await unitOfWork.Patients.Delete(id);
+            if (id == null)
+                return BadRequest();
+
+            await unitOfWork.Patients.Delete(id.Value);
             await unitOfWork.SaveAsync();
 
             LoggerManager.Log.Info($"Deleted Patient ID = {id}");
 
             return Ok();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            unitOfWork.Dispose();
+            base.Dispose(disposing);
         }
     }
 }

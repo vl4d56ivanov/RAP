@@ -28,24 +28,31 @@ namespace RAP.Domain.Repositories
                                         .ToListAsync();
         }
 
-        public Task<Appointment> GetById(int id)
+        public async Task<Appointment> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await db.Appointments.Include(a => a.Patient)
+                                        .Include(a => a.Service)
+                                        .Include(a => a.Employee)
+                                        .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public void Create(Appointment item)
         {
-            throw new NotImplementedException();
+            db.Appointments.Add(item);
         }
 
         public void Update(Appointment item)
         {
-            throw new NotImplementedException();
+
+            db.Entry(item).State = EntityState.Modified;
         }
 
-        public Task Delete(int id)
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            Appointment appointment = await db.Appointments.FindAsync(id);
+
+            if(appointment != null)
+            db.Appointments.Remove(appointment);
         }  
     }
 }
