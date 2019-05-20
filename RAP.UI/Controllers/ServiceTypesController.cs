@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using RAP.UI.Models;
+using RAP.Domain.Util;
 
 namespace RAP.UI.Controllers
 {
@@ -25,81 +26,88 @@ namespace RAP.UI.Controllers
         // GET: ServiceTypes
         public async Task<ActionResult> Index()
         {
-            IEnumerable<ServiceType> serviceTypes = await unitOfWork.ServiceTypes.GetAllAsync();
-            return View(Mapper.Map<IEnumerable<ServiceTypeViewModel>>(serviceTypes));
+
+            try
+            {
+                IEnumerable<ServiceType> serviceTypes = await unitOfWork.ServiceTypes.GetAllAsync();
+                return View(Mapper.Map<IEnumerable<ServiceTypeViewModel>>(serviceTypes));
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "ServiceTypes", "Index"));
+            }
+            
         }
 
         // GET: ServiceTypes/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
 
-        // GET: ServiceTypes/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// GET: ServiceTypes/Create
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
-        // POST: ServiceTypes/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
+        //// POST: ServiceTypes/Create
+        //[HttpPost]
+        //public ActionResult Create(FormCollection collection)
+        //{
+        //    try
+        //    {
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
-        // GET: ServiceTypes/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        //// GET: ServiceTypes/Edit/5
+        //public ActionResult Edit(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: ServiceTypes/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
+        //// POST: ServiceTypes/Edit/5
+        //[HttpPost]
+        //public ActionResult Edit(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
-        // GET: ServiceTypes/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //// GET: ServiceTypes/Delete/5
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: ServiceTypes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
+        //// POST: ServiceTypes/Delete/5
+        //[HttpPost]
+        //public ActionResult Delete(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         protected override void Dispose(bool disposing)
         {

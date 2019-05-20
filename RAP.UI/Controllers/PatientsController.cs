@@ -27,8 +27,17 @@ namespace RAP.UI.Controllers
         // GET: Patients
         public async Task<ActionResult> Index()
         {
-            IEnumerable<PatientViewModel> patients = Mapper.Map<IEnumerable<PatientViewModel>>(await unitOfWork.Patients.GetAllAsync());
-            return View(patients);
+            try
+            {
+                IEnumerable<PatientViewModel> patients = Mapper.Map<IEnumerable<PatientViewModel>>(await unitOfWork.Patients.GetAllAsync());
+                
+                return View(patients);
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Index"));
+            }
         }
 
         // GET: Patients/Create
@@ -66,25 +75,41 @@ namespace RAP.UI.Controllers
                 }
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                unitOfWork.Patients.Create(patient);
-                await unitOfWork.SaveAsync();
+                if (ModelState.IsValid)
+                {
+                    unitOfWork.Patients.Create(patient);
+                    await unitOfWork.SaveAsync();
 
-                LoggerManager.Log.Info($"Created new Patient: {patientViewModel.FName} {patientViewModel.LName}");
+                    LoggerManager.Log.Info($"Created new Patient: {patientViewModel.FName} {patientViewModel.LName}");
 
-                return RedirectToAction("Index");
+                    return RedirectToAction("Index");
+                }
+
+                return View(patientViewModel);
             }
-
-            return View(patientViewModel);
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Create"));
+            }           
         }
 
         // GET: Patients/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            Patient patient = await unitOfWork.Patients.GetById(id);
+            try
+            {
+                Patient patient = await unitOfWork.Patients.GetById(id);
 
-            return View(Mapper.Map<PatientViewModel>(patient));
+                return View(Mapper.Map<PatientViewModel>(patient));
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Details"));
+            }
         }
 
 

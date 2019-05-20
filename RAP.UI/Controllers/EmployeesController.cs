@@ -3,6 +3,7 @@ using RAP.Domain.Entities;
 using RAP.Domain.Interfaces;
 using RAP.Domain.Repositories;
 using RAP.Domain.Services;
+using RAP.Domain.Util;
 using RAP.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -32,24 +33,39 @@ namespace RAP.UI.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings); ;
+            ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings);
+            try
+            {
+                IEnumerable<EmployeeViewModel> employeeViewModels = Mapper.Map<IEnumerable<EmployeeViewModel>>(await unitOfWork.Employees.GetAllAsync());
 
-            IEnumerable<EmployeeViewModel> employeeViewModels = Mapper.Map<IEnumerable<EmployeeViewModel>>(await unitOfWork.Employees.GetAllAsync());
+                if (HttpContext.User.IsInRole("admin"))
+                    return View(employeeViewModels);
 
-            if (HttpContext.User.IsInRole("admin"))
-                return View(employeeViewModels);
-
-            return View("IndexClient", employeeViewModels);
+                return View("IndexClient", employeeViewModels);
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Employees", "Index"));
+            }           
         }
 
         //// GET: Employees/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            Employee employee = await unitOfWork.Employees.GetById(id);
-
             ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings);
 
-            return View(Mapper.Map<EmployeeViewModel>(employee));
+            try
+            {
+                Employee employee = await unitOfWork.Employees.GetById(id);
+
+                return View(Mapper.Map<EmployeeViewModel>(employee));
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Employees", "Details"));
+            }
         }
 
         //// GET: Employees/Create

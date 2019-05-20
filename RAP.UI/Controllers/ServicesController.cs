@@ -38,22 +38,38 @@ namespace RAP.UI.Controllers
         {
             ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings);
 
-            IEnumerable<ServiceViewModel> serviceViewModels = Mapper.Map<IEnumerable<ServiceViewModel>>(await unitOfWork.Services.GetAllAsync());
+            try
+            {
+                IEnumerable<ServiceViewModel> serviceViewModels = Mapper.Map<IEnumerable<ServiceViewModel>>(await unitOfWork.Services.GetAllAsync());
 
-            if (HttpContext.User.IsInRole("admin"))
-                return View(serviceViewModels);
+                if (HttpContext.User.IsInRole("admin"))
+                    return View(serviceViewModels);
 
-            return View("IndexClient", serviceViewModels);
+                return View("IndexClient", serviceViewModels);
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Services", "Index"));
+            }
         }
 
         // GET: Services/Details/5
         public async Task<ActionResult> Details(int id)
         {
-            Service service = await unitOfWork.Services.GetById(id);
-
             ViewBag.PathToDirectory = gridsImagesService.GetPathToDirectory(keyAppSettings);
 
-            return View(Mapper.Map<ServiceViewModel>(service));
+            try
+            {
+                Service service = await unitOfWork.Services.GetById(id);
+
+                return View(Mapper.Map<ServiceViewModel>(service));
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Services", "Details"));
+            }
         }
 
         // GET: Services/Create
@@ -81,28 +97,36 @@ namespace RAP.UI.Controllers
             }
 
             serviceViewModel.Logo = nameLogo;
-            
-            if (ModelState.IsValid)
+
+            try
             {
-                //TODO: Transaction???
-                if (logo != null)
+                if (ModelState.IsValid)
                 {
-                    string pathToServiceLogos = gridsImagesService.GetPathToDirectory(keyAppSettings);
-                    logo.SaveAs(Server.MapPath("~\\" + pathToServiceLogos + nameLogo));
+                    //TODO: Transaction???
+                    if (logo != null)
+                    {
+                        string pathToServiceLogos = gridsImagesService.GetPathToDirectory(keyAppSettings);
+                        logo.SaveAs(Server.MapPath("~\\" + pathToServiceLogos + nameLogo));
+                    }
+
+                    Service service = Mapper.Map<Service>(serviceViewModel);
+                    unitOfWork.Services.Create(service);
+                    await unitOfWork.SaveAsync();
+
+                    LoggerManager.Log.Info($"Created new Service: {serviceViewModel.Name}.");
+
+                    return RedirectToAction("Index");
                 }
-                    
-                Service service = Mapper.Map<Service>(serviceViewModel);
-                unitOfWork.Services.Create(service);
-                await unitOfWork.SaveAsync();
 
-                LoggerManager.Log.Info($"Created new Service: {serviceViewModel.Name}.");
-
-                return RedirectToAction("Index");
+                ViewBag.ServiceTypeId = new SelectList(await unitOfWork.ServiceTypes.GetAllAsync(), "Id", "Name",
+                                                            serviceViewModel.ServiceTypeId);
+                return View();
             }
-
-            ViewBag.ServiceTypeId = new SelectList(await unitOfWork.ServiceTypes.GetAllAsync(), "Id", "Name", 
-                                                        serviceViewModel.ServiceTypeId);
-            return View();
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Services", "Create"));
+            }
         }
 
         // GET: Services/Edit/5
@@ -130,77 +154,86 @@ namespace RAP.UI.Controllers
         {
             Service serviceFromForm = Mapper.Map<Service>(serviceViewModel);
 
-            Service serviceFromDb = await unitOfWork.Services.GetById(serviceViewModel.Id);
-
-            if (ModelState.IsValid)
+            try
             {
-                if (logo == null)
+                Service serviceFromDb = await unitOfWork.Services.GetById(serviceViewModel.Id);
+
+                if (ModelState.IsValid)
                 {
-                    serviceFromDb.Name = serviceFromForm.Name;
-                    serviceFromDb.Description = serviceFromForm.Description;
-                    serviceFromDb.ServiceTypeId = serviceFromForm.ServiceTypeId;
-
-                    unitOfWork.Services.Update(serviceFromDb);
-                    await unitOfWork.SaveAsync();
-                }
-                else
-                {
-                    string nameLogo = null;
-
-                    if (!gridsImagesService.IsGetAndValidExtencion(ref nameLogo, logo.FileName))
+                    if (logo == null)
                     {
-                        ModelState.AddModelError("Logo", "Logo must have an extension - .jpg, .png.");
+                        serviceFromDb.Name = serviceFromForm.Name;
+                        serviceFromDb.Description = serviceFromForm.Description;
+                        serviceFromDb.ServiceTypeId = serviceFromForm.ServiceTypeId;
+
+                        unitOfWork.Services.Update(serviceFromDb);
+                        await unitOfWork.SaveAsync();
                     }
-
-                    nameLogo = serviceViewModel.Name + "_" + Guid.NewGuid().ToString() + nameLogo;
-
-                    string pathToServiceLogos = gridsImagesService.GetPathToDirectory(keyAppSettings);
-
-                    if(serviceFromDb.Logo != null)
+                    else
                     {
-                        FileInfo oldLogo = new FileInfo(Server.MapPath("~\\" + pathToServiceLogos + serviceFromDb.Logo));
-                        if (oldLogo.Exists)
-                            oldLogo.Delete();
+                        string nameLogo = null;
+
+                        if (!gridsImagesService.IsGetAndValidExtencion(ref nameLogo, logo.FileName))
+                        {
+                            ModelState.AddModelError("Logo", "Logo must have an extension - .jpg, .png.");
+                        }
+
+                        nameLogo = serviceViewModel.Name + "_" + Guid.NewGuid().ToString() + nameLogo;
+
+                        string pathToServiceLogos = gridsImagesService.GetPathToDirectory(keyAppSettings);
+
+                        if (serviceFromDb.Logo != null)
+                        {
+                            FileInfo oldLogo = new FileInfo(Server.MapPath("~\\" + pathToServiceLogos + serviceFromDb.Logo));
+                            if (oldLogo.Exists)
+                                oldLogo.Delete();
+                        }
+                        logo.SaveAs(Server.MapPath("~\\" + pathToServiceLogos + nameLogo));
+
+                        serviceFromDb.Name = serviceFromForm.Name;
+                        serviceFromDb.Description = serviceFromForm.Description;
+                        serviceFromDb.ServiceTypeId = serviceFromForm.ServiceTypeId;
+                        serviceFromDb.Logo = nameLogo;
+
+                        unitOfWork.Services.Update(serviceFromDb);
+                        await unitOfWork.SaveAsync();
                     }
-                    logo.SaveAs(Server.MapPath("~\\" + pathToServiceLogos + nameLogo));
+                    LoggerManager.Log.Info($"Updated Service: {serviceViewModel.Name}.");
 
-                    serviceFromDb.Name = serviceFromForm.Name;
-                    serviceFromDb.Description = serviceFromForm.Description;
-                    serviceFromDb.ServiceTypeId = serviceFromForm.ServiceTypeId;
-                    serviceFromDb.Logo = nameLogo;
-
-                    unitOfWork.Services.Update(serviceFromDb);
-                    await unitOfWork.SaveAsync();
+                    return RedirectToAction("Index");
                 }
-                LoggerManager.Log.Info($"Updated Service: {serviceViewModel.Name}.");
 
-                return RedirectToAction("Index");
+                ViewBag.ServiceTypeId = new SelectList(await unitOfWork.ServiceTypes.GetAllAsync(), "Id", "Name",
+                                                       serviceViewModel.ServiceTypeId);
+                return View(serviceViewModel);
             }
-            ViewBag.ServiceTypeId = new SelectList(await unitOfWork.ServiceTypes.GetAllAsync(), "Id", "Name",
-                                                        serviceViewModel.ServiceTypeId);
-            return View(serviceViewModel);
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Services", "Edit"));
+            }        
         }
 
         // GET: Services/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        //public ActionResult Delete(int id)
+        //{
+        //    return View();
+        //}
 
-        // POST: Services/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
+        //// POST: Services/Delete/5
+        //[HttpPost]
+        //public ActionResult Delete(int id, FormCollection collection)
+        //{
+        //    try
+        //    {
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         protected override void Dispose(bool disposing)
         {
