@@ -10,6 +10,7 @@ using AutoMapper;
 using RAP.Domain.Repositories;
 using RAP.Domain.Entities;
 using RAP.Domain.Util;
+using System.Net;
 
 namespace RAP.UI.Controllers
 {
@@ -114,27 +115,67 @@ namespace RAP.UI.Controllers
 
 
 
-        //// GET: Patients/Edit/5
-        //public ActionResult Edit(int id)
-        //{
-        //    return View();
-        //}
+        // GET: Patients/Edit/5
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-        //// POST: Patients/Edit/5
-        //[HttpPost]
-        //public ActionResult Edit(int id, FormCollection collection)
-        //{
-        //    try
-        //    {
-        //        // TODO: Add update logic here
+            Patient patient = await unitOfWork.Patients.GetById(id.Value);
 
-        //        return RedirectToAction("Index");
-        //    }
-        //    catch
-        //    {
-        //        return View();
-        //    }
-        //}
+            if (patient == null)
+                return HttpNotFound();
+
+            return View(Mapper.Map<PatientViewModel>(patient));
+        }
+
+        // POST: Patients/Edit/5
+        [HttpPost]
+        public async Task<ActionResult> Edit(PatientViewModel patientViewModel)
+        {
+            if (
+                String.IsNullOrEmpty(patientViewModel.Address.City) ||
+                String.IsNullOrEmpty(patientViewModel.Address.Street) ||
+                String.IsNullOrEmpty(patientViewModel.Address.Home) ||
+                String.IsNullOrEmpty(patientViewModel.Address.Flat))
+                ModelState.AddModelError("Address 1", "Address 1 must be filled out completely.");
+
+
+            if ((patientViewModel.Address2.City == null ||
+                patientViewModel.Address2.Street == null ||
+                patientViewModel.Address2.Home == null ||
+                patientViewModel.Address2.Flat == null))
+            {
+                if (!(patientViewModel.Address2.City == null &&
+                    patientViewModel.Address2.Street == null &&
+                    patientViewModel.Address2.Home == null &&
+                    patientViewModel.Address2.Flat == null))
+                {
+                    ModelState.AddModelError("Address 2", "Address 2 must be filled out completely.");
+                }
+            }
+            Patient patient = Mapper.Map<Patient>(patientViewModel);
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    unitOfWork.Patients.Update(patient);
+                    await unitOfWork.SaveAsync();
+
+                    LoggerManager.Log.Info($"Updated Patient: {patientViewModel.FName} {patientViewModel.LName}");
+
+                    return RedirectToAction("Index");
+                }
+
+                return View(patientViewModel);
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Edit"));
+            }
+        }
 
         //// GET: Patients/Delete/5
         //public ActionResult Delete(int id)
@@ -148,7 +189,6 @@ namespace RAP.UI.Controllers
         //{
         //    try
         //    {
-        //        // TODO: Add delete logic here
 
         //        return RedirectToAction("Index");
         //    }

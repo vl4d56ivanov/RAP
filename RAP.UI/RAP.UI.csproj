@@ -574,6 +574,7 @@
     <Content Include="Views\Employees\IndexClient.cshtml" />
     <Content Include="Views\Services\IndexClient.cshtml" />
     <Content Include="Views\Services\Edit.cshtml" />
+    <Content Include="Views\Patients\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
