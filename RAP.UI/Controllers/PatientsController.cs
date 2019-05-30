@@ -28,74 +28,76 @@ namespace RAP.UI.Controllers
         // GET: Patients
         public async Task<ActionResult> Index()
         {
-            try
-            {
-                IEnumerable<PatientViewModel> patients = Mapper.Map<IEnumerable<PatientViewModel>>(await unitOfWork.Patients.GetAllAsync());
-                
-                return View(patients);
-            }
-            catch (Exception ex)
-            {
-                LoggerManager.Log.Error("", ex);
-                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Index"));
-            }
+            return View();
         }
 
         // GET: Patients/Create
         public async Task<ActionResult> Create()
         {
-            return View();
+            return PartialView("Create");
         }
 
-        // POST: Patients/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(PatientViewModel patientViewModel)
+        public async Task<ActionResult> CreateModal(PatientViewModel patientViewModel)
         {
             Patient patient = Mapper.Map<Patient>(patientViewModel);
+            unitOfWork.Patients.Create(patient);
+            await unitOfWork.SaveAsync();
 
-            if (
-                String.IsNullOrEmpty(patientViewModel.Address.City) ||
-                String.IsNullOrEmpty(patientViewModel.Address.Street) ||
-                String.IsNullOrEmpty(patientViewModel.Address.Home) ||
-                String.IsNullOrEmpty(patientViewModel.Address.Flat))
-                ModelState.AddModelError("Address 1", "Address 1 must be filled out completely.");
+            IEnumerable<Patient> patients = await unitOfWork.Patients.GetAllAsync();
+            IEnumerable<PatientViewModel> patientViewModels = Mapper.Map<IEnumerable<PatientViewModel>>(patients);
+
+            return PartialView("_TableData", patientViewModels);
+        }
+
+        //// POST: Patients/Create
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> Create(PatientViewModel patientViewModel)
+        //{
+        //    Patient patient = Mapper.Map<Patient>(patientViewModel);
+
+        //    if (
+        //        String.IsNullOrEmpty(patientViewModel.Address.City) ||
+        //        String.IsNullOrEmpty(patientViewModel.Address.Street) ||
+        //        String.IsNullOrEmpty(patientViewModel.Address.Home) ||
+        //        String.IsNullOrEmpty(patientViewModel.Address.Flat))
+        //        ModelState.AddModelError("Address 1", "Address 1 must be filled out completely.");
 
             
-            if ((patientViewModel.Address2.City == null ||
-                patientViewModel.Address2.Street == null ||
-                patientViewModel.Address2.Home == null ||
-                patientViewModel.Address2.Flat == null))
-            {
-                if (!(patientViewModel.Address2.City == null &&
-                    patientViewModel.Address2.Street == null &&
-                    patientViewModel.Address2.Home == null &&
-                    patientViewModel.Address2.Flat == null))
-                {
-                    ModelState.AddModelError("Address 2", "Address 2 must be filled out completely.");
-                }
-            }
+        //    if ((patientViewModel.Address2.City == null ||
+        //        patientViewModel.Address2.Street == null ||
+        //        patientViewModel.Address2.Home == null ||
+        //        patientViewModel.Address2.Flat == null))
+        //    {
+        //        if (!(patientViewModel.Address2.City == null &&
+        //            patientViewModel.Address2.Street == null &&
+        //            patientViewModel.Address2.Home == null &&
+        //            patientViewModel.Address2.Flat == null))
+        //        {
+        //            ModelState.AddModelError("Address 2", "Address 2 must be filled out completely.");
+        //        }
+        //    }
 
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    unitOfWork.Patients.Create(patient);
-                    await unitOfWork.SaveAsync();
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            unitOfWork.Patients.Create(patient);
+        //            await unitOfWork.SaveAsync();
 
-                    LoggerManager.Log.Info($"Created new Patient: {patientViewModel.FName} {patientViewModel.LName}");
+        //            LoggerManager.Log.Info($"Created new Patient: {patientViewModel.FName} {patientViewModel.LName}");
 
-                    return RedirectToAction("Index");
-                }
+        //            return RedirectToAction("Index");
+        //        }
 
-                return View(patientViewModel);
-            }
-            catch (Exception ex)
-            {
-                LoggerManager.Log.Error("", ex);
-                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Create"));
-            }           
-        }
+        //        return View(patientViewModel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LoggerManager.Log.Error("", ex);
+        //        return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Create"));
+        //    }           
+        //}
 
         // GET: Patients/Details/5
         public async Task<ActionResult> Details(int id)
@@ -175,6 +177,28 @@ namespace RAP.UI.Controllers
                 LoggerManager.Log.Error("", ex);
                 return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Edit"));
             }
+        }
+
+        [ChildActionOnly]
+        public ActionResult TableData()
+        {
+            try
+            {
+                IEnumerable<PatientViewModel> patients = Task.Run(GetPatientsForTableDataAsync).Result;    //GetPatientsForTableData().Result;
+                return PartialView("_TableData", patients);
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Index"));
+            }          
+        }
+
+        //TODO: How to add async/await?
+        private async Task<IEnumerable<PatientViewModel>> GetPatientsForTableDataAsync()
+        {
+                IEnumerable<Patient> patients = await unitOfWork.Patients.GetAllAsync();
+                 return  Mapper.Map<IEnumerable<PatientViewModel>>(patients);
         }
 
         //// GET: Patients/Delete/5
