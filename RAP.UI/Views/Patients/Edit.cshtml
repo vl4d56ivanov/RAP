@@ -1,21 +1,25 @@
 ﻿@model RAP.UI.Models.PatientViewModel
 
-@{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
-
-@section styles{
+<script>
     @Styles.Render("~/Content/intl-tel-input")
+</script>
+
+@{
+    var options = new AjaxOptions
+    {
+        UpdateTargetId = "tabledata",
+        Url = @Url.Content("Patients/EditModal")
+    };
 }
 
 <div class="modal-content">
+
     <div class="modal-header">
-        @*<button class="close" data-dismiss="modal" area-hidden="true">X</button>*@
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
         <h3>Edit Patient</h3>
     </div>
 
-    @using (Html.BeginForm())
+    @using (Ajax.BeginForm(options))
     {
         @Html.AntiForgeryToken()
         <div class="modal-body">
@@ -135,10 +139,11 @@
             <div class="modal-footer">
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Edit" class="btn btn-primary" />
-                        <a href="@Url.Action("Index")" class="btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-left"></i> Back to list
-                        </a>
+                        <input type="submit" value="Edit" class="btn btn-primary" id="editModal" />
+
+                        <button class="btn btn-default" data-dismiss="modal" area-hidden="true">
+                            <i class="glyphicon glyphicon-arrow-left"></i>Back to List
+                        </button>
                     </div>
                 </div>
             </div>
@@ -148,10 +153,16 @@
 
 </div>
 
-@section scripts{
     @*@Scripts.Render("~/bundles/intl-tel-input")*@
 
     <script src="~/Scripts/IntlTelInput_js/utils.js"></script>
     <script src="~/Scripts/IntlTelInput_js/intlTelInput.min.js"></script>
     <script src="~/Scripts/InitIntlTelInput.js"></script>
-}
+
+    <script>
+        $(function () {
+            $("#editModal").click(function (e) {
+                $("#modDialog").modal("hide");
+            });
+        });
+    </script>

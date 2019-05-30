@@ -131,53 +131,65 @@ namespace RAP.UI.Controllers
             return View(Mapper.Map<PatientViewModel>(patient));
         }
 
-        // POST: Patients/Edit/5
-        [HttpPost]
-        public async Task<ActionResult> Edit(PatientViewModel patientViewModel)
+        public async Task<ActionResult> EditModal(PatientViewModel patientViewModel)
         {
-            if (
-                String.IsNullOrEmpty(patientViewModel.Address.City) ||
-                String.IsNullOrEmpty(patientViewModel.Address.Street) ||
-                String.IsNullOrEmpty(patientViewModel.Address.Home) ||
-                String.IsNullOrEmpty(patientViewModel.Address.Flat))
-                ModelState.AddModelError("Address 1", "Address 1 must be filled out completely.");
-
-
-            if ((patientViewModel.Address2.City == null ||
-                patientViewModel.Address2.Street == null ||
-                patientViewModel.Address2.Home == null ||
-                patientViewModel.Address2.Flat == null))
-            {
-                if (!(patientViewModel.Address2.City == null &&
-                    patientViewModel.Address2.Street == null &&
-                    patientViewModel.Address2.Home == null &&
-                    patientViewModel.Address2.Flat == null))
-                {
-                    ModelState.AddModelError("Address 2", "Address 2 must be filled out completely.");
-                }
-            }
             Patient patient = Mapper.Map<Patient>(patientViewModel);
+            unitOfWork.Patients.Update(patient);
+            await unitOfWork.SaveAsync();
 
-            try
-            {
-                if (ModelState.IsValid)
-                {
-                    unitOfWork.Patients.Update(patient);
-                    await unitOfWork.SaveAsync();
+            IEnumerable<Patient> patients = await unitOfWork.Patients.GetAllAsync();
+            IEnumerable<PatientViewModel> patientViewModels = Mapper.Map<IEnumerable<PatientViewModel>>(patients);
 
-                    LoggerManager.Log.Info($"Updated Patient: {patientViewModel.FName} {patientViewModel.LName}");
-
-                    return RedirectToAction("Index");
-                }
-
-                return View(patientViewModel);
-            }
-            catch (Exception ex)
-            {
-                LoggerManager.Log.Error("", ex);
-                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Edit"));
-            }
+            return PartialView("_TableData", patientViewModels);
         }
+
+        //// POST: Patients/Edit/5
+        //[HttpPost]
+        //public async Task<ActionResult> Edit(PatientViewModel patientViewModel)
+        //{
+        //    if (
+        //        String.IsNullOrEmpty(patientViewModel.Address.City) ||
+        //        String.IsNullOrEmpty(patientViewModel.Address.Street) ||
+        //        String.IsNullOrEmpty(patientViewModel.Address.Home) ||
+        //        String.IsNullOrEmpty(patientViewModel.Address.Flat))
+        //        ModelState.AddModelError("Address 1", "Address 1 must be filled out completely.");
+
+
+        //    if ((patientViewModel.Address2.City == null ||
+        //        patientViewModel.Address2.Street == null ||
+        //        patientViewModel.Address2.Home == null ||
+        //        patientViewModel.Address2.Flat == null))
+        //    {
+        //        if (!(patientViewModel.Address2.City == null &&
+        //            patientViewModel.Address2.Street == null &&
+        //            patientViewModel.Address2.Home == null &&
+        //            patientViewModel.Address2.Flat == null))
+        //        {
+        //            ModelState.AddModelError("Address 2", "Address 2 must be filled out completely.");
+        //        }
+        //    }
+        //    Patient patient = Mapper.Map<Patient>(patientViewModel);
+
+        //    try
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            unitOfWork.Patients.Update(patient);
+        //            await unitOfWork.SaveAsync();
+
+        //            LoggerManager.Log.Info($"Updated Patient: {patientViewModel.FName} {patientViewModel.LName}");
+
+        //            return RedirectToAction("Index");
+        //        }
+
+        //        return View(patientViewModel);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        LoggerManager.Log.Error("", ex);
+        //        return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Patients", "Edit"));
+        //    }
+        //}
 
         [ChildActionOnly]
         public ActionResult TableData()
