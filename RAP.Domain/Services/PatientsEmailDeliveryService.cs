@@ -5,6 +5,7 @@ using RAP.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RAP.Domain.Services
 {
@@ -23,7 +24,7 @@ namespace RAP.Domain.Services
             message = new IdentityMessage();
         }
 
-        public void MakeDeliveryToMail()
+        public async Task MakeDeliveryToMail()
         {
             foreach (var item in _patients)
             {
@@ -31,14 +32,14 @@ namespace RAP.Domain.Services
                 message.Subject = GetMessageSubject();
                 message.Body = GetMessageBody(item);
 
-                emailService.SendAsync(message);
+                await emailService.SendAsync(message);
             }
         }
 
         private string GetMessageBody(Patient patient)
         {
             StringBuilder messBuilder = new StringBuilder();
-            messBuilder.AppendLine($"Dear Ms./Mrs {patient.FName} {patient.LName}!");
+            messBuilder.AppendLine($"Dear Mr./Ms. {patient.FName} {patient.LName}!");
             messBuilder.AppendLine(baseText);
             messBuilder.AppendLine("With regards, RAP.");
 
