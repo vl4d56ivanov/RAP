@@ -8,6 +8,6 @@ namespace RAP.Domain.Interfaces
 {
     public interface IEmailDeliveryService
     {
-        void MakeDeliveryToMail();
+        Task MakeDeliveryToMail();
     }
 }
