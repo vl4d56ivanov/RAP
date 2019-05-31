@@ -90,12 +90,14 @@
     <Compile Include="Identity\IdentityModels.cs" />
     <Compile Include="Identity\InitializationRapDb.cs" />
     <Compile Include="Interfaces\IBaseRepository.cs" />
+    <Compile Include="Interfaces\IEmailDeliveryService.cs" />
     <Compile Include="Interfaces\IGridsImagesService.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Repositories\AppointmentsRepository.cs" />
     <Compile Include="Repositories\PatientsRepository.cs" />
     <Compile Include="Repositories\ServicesRepository.cs" />
     <Compile Include="Services\GridsImagesService.cs" />
+    <Compile Include="Services\PatientsEmailDeliveryService.cs" />
     <Compile Include="Util\AccessLevel.cs" />
     <Compile Include="Util\LoggerManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
