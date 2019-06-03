@@ -26,6 +26,9 @@ namespace RAP.UI.Models
         [StringLength(20, MinimumLength = 2)]
         public string Phone { get; set; }
 
+        //TODO: Add validation
+        public string Email { get; set; }
+
         public int? AddressId { get; set; }
 
         //TODO: Added all address - string

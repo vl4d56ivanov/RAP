@@ -21,6 +21,8 @@ namespace RAP.Api.Models
         [Required]
         public string Phone { get; set; }
 
+        public string Email { get; set; }
+
         public int? AddressId { get; set; }
 
         public AddressApiModel Address { get; set; }
