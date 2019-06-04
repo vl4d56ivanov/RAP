@@ -10,12 +10,20 @@
 <h2>Patients List</h2>
 
 <!-- For Create and Edit modal window. -->
-<div id="modDialog" class="modal fade">
+@*<div id="modDialog" class="modal fade">
     <div id="dialogContent" class="modal-dialog"></div>
+</div>*@
+
+<div id="modCreate" class="modal fade">
+    <div id="createContent" class="modal-dialog"></div>
+</div>
+
+<div id="modEdit" class="modal fade">
+    <div id="editContent" class="modal-dialog"></div>
 </div>
 
 <p>
-    @Html.ActionLink("Create New", "Create", null, new { @class = "formItem" })
+    @Html.ActionLink("Create New", "Create", null, new { @class = "formCreate" })
 </p>
 <table class="table table-striped">
     <thead>
@@ -58,14 +66,37 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
     <script type="text/javascript">
+        //$(function () {
+        //    $.ajaxSetup({ cache: false });
+        //    $(".formItem").click(function (e) {
+
+        //        e.preventDefault();
+        //        $.get(this.href, function (data) {
+        //            $('#dialogContent').html(data);
+        //            $('#modDialog').modal('show');
+        //        });
+        //    });
+        //})
+
         $(function () {
             $.ajaxSetup({ cache: false });
-            $(".formItem").click(function (e) {
+            $(".formCreate").click(function (e) {
 
                 e.preventDefault();
                 $.get(this.href, function (data) {
-                    $('#dialogContent').html(data);
-                    $('#modDialog').modal('show');
+                    $('#createContent').html(data);
+                    $('#modCreate').modal('show');
+                });
+            });
+
+            $(".formEdit").click(function (e) {
+
+                $('#editContent').empty();
+
+                e.preventDefault();
+                $.get(this.href, function (data) {
+                    $('#editContent').html(data);
+                    $('#modEdit').modal('show');
                 });
             });
         })

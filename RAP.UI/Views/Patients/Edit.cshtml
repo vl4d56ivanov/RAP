@@ -8,7 +8,8 @@
     var options = new AjaxOptions
     {
         UpdateTargetId = "tabledata",
-        Url = @Url.Content("Patients/EditModal")
+        Url = @Url.Content("Patients/EditModal"),
+        OnComplete = "OnComplete"
     };
 }
 
@@ -168,9 +169,14 @@
     <script src="~/Scripts/InitIntlTelInput.js"></script>
 
     <script>
-        $(function () {
-            $("#editModal").click(function (e) {
-                $("#modDialog").modal("hide");
-            });
-        });
+        //$(function () {
+        //    $("#editModal").click(function (e) {
+        //        $("#modEdit").modal("hide");
+        //    });
+        //});
+
+        function OnComplete(recuest, status) {
+            $('#editContent').empty();
+            $("#modEdit").modal("hide");
+        }
     </script>
