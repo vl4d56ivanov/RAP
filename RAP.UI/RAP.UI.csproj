@@ -246,6 +246,56 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bell\contactform\contactform.js" />
+    <Content Include="Content\Bell\css\style.css" />
+    <Content Include="Content\Bell\img\cover.jpg" />
+    <Content Include="Content\Bell\img\gadgets.png" />
+    <Content Include="Content\Bell\img\logo-nav.png" />
+    <Content Include="Content\Bell\img\logo.png" />
+    <Content Include="Content\Bell\img\parallax-bg.jpg" />
+    <Content Include="Content\Bell\img\porf-1.jpg" />
+    <Content Include="Content\Bell\img\porf-2.jpg" />
+    <Content Include="Content\Bell\img\porf-3.jpg" />
+    <Content Include="Content\Bell\img\porf-4.jpg" />
+    <Content Include="Content\Bell\img\porf-5.jpg" />
+    <Content Include="Content\Bell\img\porf-6.jpg" />
+    <Content Include="Content\Bell\img\porf-7.jpg" />
+    <Content Include="Content\Bell\img\porf-8.jpg" />
+    <Content Include="Content\Bell\img\team-1.jpg" />
+    <Content Include="Content\Bell\img\team-2.jpg" />
+    <Content Include="Content\Bell\img\team-3.jpg" />
+    <Content Include="Content\Bell\img\team-4.jpg" />
+    <Content Include="Content\Bell\js\custom.js" />
+    <Content Include="Content\Bell\lib\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\Bell\lib\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\Bell\lib\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\Bell\lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\Bell\lib\counterup\counterup.min.js" />
+    <Content Include="Content\Bell\lib\easing\easing.js" />
+    <Content Include="Content\Bell\lib\easing\easing.min.js" />
+    <Content Include="Content\Bell\lib\font-awesome\css\font-awesome.css" />
+    <Content Include="Content\Bell\lib\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Content\Bell\lib\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Bell\lib\jquery\jquery-migrate.min.js" />
+    <Content Include="Content\Bell\lib\jquery\jquery.min.js" />
+    <Content Include="Content\Bell\lib\lockfixed\lockfixed.min.js" />
+    <Content Include="Content\Bell\lib\parallax\parallax.js" />
+    <Content Include="Content\Bell\lib\stellar\stellar.min.js" />
+    <Content Include="Content\Bell\lib\stickyjs\sticky.js" />
+    <Content Include="Content\Bell\lib\superfish\hoverIntent.js" />
+    <Content Include="Content\Bell\lib\superfish\superfish.js" />
+    <Content Include="Content\Bell\lib\superfish\superfish.min.js" />
+    <Content Include="Content\Bell\lib\tether\css\tether-theme-arrows-dark.css" />
+    <Content Include="Content\Bell\lib\tether\css\tether-theme-arrows-dark.min.css" />
+    <Content Include="Content\Bell\lib\tether\css\tether-theme-arrows.css" />
+    <Content Include="Content\Bell\lib\tether\css\tether-theme-arrows.min.css" />
+    <Content Include="Content\Bell\lib\tether\css\tether-theme-basic.css" />
+    <Content Include="Content\Bell\lib\tether\css\tether-theme-basic.min.css" />
+    <Content Include="Content\Bell\lib\tether\css\tether.css" />
+    <Content Include="Content\Bell\lib\tether\css\tether.min.css" />
+    <Content Include="Content\Bell\lib\tether\js\tether.js" />
+    <Content Include="Content\Bell\lib\tether\js\tether.min.js" />
+    <Content Include="Content\Bell\lib\waypoints\waypoints.min.js" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -429,6 +479,11 @@
     <Content Include="Content\DataTables\css\semanticui.scss" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <Content Include="Content\Bell\lib\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Bell\lib\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Bell\lib\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Bell\lib\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Bell\lib\font-awesome\fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -578,6 +633,7 @@
     <Content Include="Views\Services\Edit.cshtml" />
     <Content Include="Views\Patients\Edit.cshtml" />
     <Content Include="Views\Patients\_TableData.cshtml" />
+    <Content Include="Views\Shared\_Layout_old.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
