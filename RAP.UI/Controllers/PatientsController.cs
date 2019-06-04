@@ -106,7 +106,7 @@ namespace RAP.UI.Controllers
             {
                 Patient patient = await unitOfWork.Patients.GetById(id);
 
-                return View(Mapper.Map<PatientViewModel>(patient));
+                return PartialView("Edit", Mapper.Map<PatientViewModel>(patient));
             }
             catch (Exception ex)
             {
