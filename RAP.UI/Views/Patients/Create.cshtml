@@ -1,24 +1,25 @@
 ﻿@model RAP.UI.Models.PatientViewModel
 
-@{
-    ViewBag.Title = "Create";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
-}
-
-@section styles{
-    @*<link href="~/Content/IntlTelInput_css/demo.css" rel="stylesheet" />
-        <link href="~/Content/IntlTelInput_css/intlTelInput.css" rel="stylesheet" />*@
-
+<script>
     @Styles.Render("~/Content/intl-tel-input")
+</script>
+
+@{
+    var options = new AjaxOptions
+    {
+        UpdateTargetId = "tabledata",
+        Url = @Url.Content("Patients/CreateModal")
+    };
 }
 
 <div class="modal-content">
+
     <div class="modal-header">
-        @*<button class="close" data-dismiss="modal" area-hidden="true">X</button>*@
+        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
         <h3>Create new Patient</h3>
     </div>
 
-    @using (Html.BeginForm())
+    @using (Ajax.BeginForm(options))
     {
         @Html.AntiForgeryToken()
         <div class="modal-body">
@@ -140,10 +141,11 @@
             <div class="modal-footer">
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Create" class="btn btn-primary" />
-                        <a href="@Url.Action("Index")" class="btn btn-default">
-                            <i class="glyphicon glyphicon-arrow-left"></i> Back to list
-                        </a>
+                        <input type="submit" value="Create" class="btn btn-primary" id="createModal" />
+
+                        <button class="btn btn-default" data-dismiss="modal" area-hidden="true">
+                            <i class="glyphicon glyphicon-arrow-left"></i>Back to List
+                        </button>
                     </div>
                 </div>
             </div>
@@ -153,10 +155,15 @@
 
 </div>
 
-@section scripts{
-    @*@Scripts.Render("~/bundles/intl-tel-input")*@
 
     <script src="~/Scripts/IntlTelInput_js/utils.js"></script>
     <script src="~/Scripts/IntlTelInput_js/intlTelInput.min.js"></script>
     <script src="~/Scripts/InitIntlTelInput.js"></script>
-}
+
+    <script>
+        $(function () {
+            $("#createModal").click(function (e) {
+                $("#modDialog").modal("hide");
+            });
+        });
+    </script>
