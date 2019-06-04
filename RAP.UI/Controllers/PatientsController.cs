@@ -106,7 +106,7 @@ namespace RAP.UI.Controllers
             {
                 Patient patient = await unitOfWork.Patients.GetById(id);
 
-                return PartialView("Edit", Mapper.Map<PatientViewModel>(patient));
+                return View(Mapper.Map<PatientViewModel>(patient));
             }
             catch (Exception ex)
             {
@@ -128,7 +128,7 @@ namespace RAP.UI.Controllers
             if (patient == null)
                 return HttpNotFound();
 
-            return View(Mapper.Map<PatientViewModel>(patient));
+            return PartialView("Edit", Mapper.Map<PatientViewModel>(patient));
         }
 
         public async Task<ActionResult> EditModal(PatientViewModel patientViewModel)
