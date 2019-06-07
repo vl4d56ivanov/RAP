@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using RAP.Domain.Entities;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 
@@ -56,6 +57,11 @@ namespace RAP.Domain.Identity
             db.Appointments.AddRange(new List<Appointment>
             {
                 new Appointment{Title = "TitleOne", Patient = patient1, Service = service1, Employee = employee1, Description = "Text text text..."}
+            });
+
+            db.Analyzes.AddRange(new List<Analyze>
+            {
+                new Analyze{Title = "TitleOne", Patient = patient1, Description = "Text text text...", DateCreated = DateTime.Now }
             });
 
             base.Seed(db);

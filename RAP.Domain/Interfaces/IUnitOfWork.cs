@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 namespace RAP.Domain.Interfaces
 {
     public interface IUnitOfWork : IDisposable
-    {
-        
+    {     
         IBaseRepository<Address>     Addresses { get; }
+        IBaseRepository<Analyze>     Analyzes { get; }
         IBaseRepository<Appointment> Appointments { get; }
         IBaseRepository<Employee>    Employees { get; }
         IBaseRepository<Patient>     Patients { get; }
