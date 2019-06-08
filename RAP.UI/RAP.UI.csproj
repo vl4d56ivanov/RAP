@@ -638,6 +638,10 @@
     <Content Include="Views\Shared\_Layout_old.cshtml" />
     <Content Include="Views\Home\Index_2.cshtml" />
     <Content Include="Views\Analyzes\Index.cshtml" />
+    <Content Include="Views\Analyzes\Create.cshtml" />
+    <Content Include="Views\Analyzes\Edit.cshtml" />
+    <Content Include="Views\Analyzes\Details.cshtml" />
+    <Content Include="Views\Analyzes\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

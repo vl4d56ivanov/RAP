@@ -14,17 +14,20 @@ namespace RAP.UI.Models
         [Required]
         public string Title { get; set; }
 
+        [Required]
         public string Description { get; set; }
 
         [Required]
         public string Parameters { get; set; }
 
         [Required]
+        [Display(Name = "Date Created")]
         public DateTime DateCreated { get; set; }
 
-        //TODO: Doctor?
-        //public int DoctorId { get; set; }
-        //public Doctor Doctor { get; set; }
+        [Required]
+        [Display(Name = "Employee")]
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
 
         [Required]
         [Display(Name = "Patient")]

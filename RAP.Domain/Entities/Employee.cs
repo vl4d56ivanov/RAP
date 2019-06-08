@@ -19,10 +19,12 @@ namespace RAP.Domain.Entities
         public AccessLevel AccessLevel { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Employee> Employees { get; set; }
 
         public Employee()
         {
             Appointments = new List<Appointment>();
+            Employees = new List<Employee>();
         }
     }
 }

@@ -61,7 +61,7 @@ namespace RAP.Domain.Identity
 
             db.Analyzes.AddRange(new List<Analyze>
             {
-                new Analyze{Title = "TitleOne", Patient = patient1, Description = "Text text text...", DateCreated = DateTime.Now }
+                new Analyze{Title = "TitleOne", Patient = patient1, Employee = employee1, Description = "Text text text...", DateCreated = DateTime.Now }
             });
 
             base.Seed(db);

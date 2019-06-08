@@ -18,12 +18,16 @@ namespace RAP.Domain.Repositories
 
         public async Task<IEnumerable<Analyze>> GetAllAsync()
         {
-            return await db.Analyzes.Include(a => a.Patient).ToListAsync();
+            return await db.Analyzes.Include(a => a.Patient)
+                                    .Include(a => a.Employee)
+                                    .ToListAsync();
         }
 
         public async Task<Analyze> GetById(int id)
         {
-            return await db.Analyzes.Include(a => a.Patient).FirstOrDefaultAsync(a => a.Id == id);
+            return await db.Analyzes.Include(a => a.Patient)
+                                    .Include(a => a.Employee)
+                                    .FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public void Create(Analyze item)

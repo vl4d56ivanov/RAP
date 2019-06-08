@@ -32,6 +32,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.PatientId)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmployeeId)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -39,28 +42,33 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Parameters)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PatientId)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Parameters)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.PatientId)*@
+                @Html.ActionLink(item.Patient.FName + " " + item.Patient.LName, "Details", "Patients", new { id = item.PatientId }, null)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Employee.LName)*@
+                @Html.ActionLink(item.Employee.FName + " " + item.Employee.LName, "Details", "Employees", new { id = item.EmployeeId }, null)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
         }
     </tbody>
 

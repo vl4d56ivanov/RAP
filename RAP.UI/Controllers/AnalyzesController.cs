@@ -7,6 +7,7 @@ using RAP.UI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -40,77 +41,173 @@ namespace RAP.UI.Controllers
         }
 
         // GET: Analyzes/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(int? id)
         {
-            return View();
+            Analyze analyze = null;
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                analyze = await unitOfWork.Analyzes.GetById(id.Value);
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Analyzes", "Index"));
+            }
+
+            if (analyze == null)
+            {
+                return HttpNotFound();
+            }
+            
+            return View(Mapper.Map<AnalyzeViewModel>(analyze));
         }
 
         // GET: Analyzes/Create
-        public ActionResult Create()
+        public async Task<ActionResult> Create()
         {
+            ViewBag.PatientId = new SelectList(await unitOfWork.Patients.GetAllAsync(), "Id", "LName");
+            ViewBag.EmployeeId = new SelectList(await unitOfWork.Employees.GetAllAsync(), "Id", "LName");
+
             return View();
         }
 
         // POST: Analyzes/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Create(AnalyzeViewModel analyzeViewModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-              
-                return RedirectToAction("Index");
+                try
+                {
+                    unitOfWork.Analyzes.Create(Mapper.Map<Analyze>(analyzeViewModel));
+                    await unitOfWork.SaveAsync();
+
+                    return RedirectToAction("Index");
+                }
+                catch (Exception ex)
+                {
+                    LoggerManager.Log.Error("", ex);
+                    return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Analyzes", "Create"));
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.PatientId = new SelectList(await unitOfWork.Patients.GetAllAsync(), "Id", "LName", analyzeViewModel.PatientId);
+            ViewBag.EmployeeId = new SelectList(await unitOfWork.Employees.GetAllAsync(), "Id", "LName", analyzeViewModel.EmployeeId);
+
+            return View(analyzeViewModel);
         }
 
         // GET: Analyzes/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Analyze analyze = await unitOfWork.Analyzes.GetById(id.Value);
+
+            if (analyze == null)
+            {
+                return HttpNotFound();
+            }
+
+            AnalyzeViewModel analyzeViewModel = Mapper.Map<AnalyzeViewModel>(analyze);
+
+            ViewBag.PatientId = new SelectList(await unitOfWork.Patients.GetAllAsync(), "Id", "LName", analyzeViewModel.PatientId);
+            ViewBag.EmployeeId = new SelectList(await unitOfWork.Employees.GetAllAsync(), "Id", "LName", analyzeViewModel.EmployeeId);
+
+            return View(analyzeViewModel);
         }
 
         // POST: Analyzes/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(AnalyzeViewModel analyzeViewModel)
         {
-            try
+            if (ModelState.IsValid)
             {
-               
-                return RedirectToAction("Index");
+                try
+                {
+                    unitOfWork.Analyzes.Update(Mapper.Map<Analyze>(analyzeViewModel));
+                    await unitOfWork.SaveAsync();
+
+                    return RedirectToAction("Index");
+                }
+                catch(Exception ex)
+                {
+                    LoggerManager.Log.Error("", ex);
+                    return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Analyzes", "Edit"));
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            ViewBag.PatientId = new SelectList(await unitOfWork.Patients.GetAllAsync(), "Id", "LName", analyzeViewModel.PatientId);
+            ViewBag.EmployeeId = new SelectList(await unitOfWork.Employees.GetAllAsync(), "Id", "LName", analyzeViewModel.EmployeeId);
+
+            return View(analyzeViewModel);
         }
 
         // GET: Analyzes/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int? id)
         {
-            return View();
+            Analyze analyze = null;
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            try
+            {
+                analyze = await unitOfWork.Analyzes.GetById(id.Value);
+            }
+            catch (Exception ex)
+            {
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Analyzes", "Index"));
+            }
+
+            if (analyze == null)
+            {
+                return HttpNotFound();
+            }
+
+            return View(Mapper.Map<AnalyzeViewModel>(analyze));
         }
 
         // POST: Analyzes/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> DeleteConfirmed(int id)
         {
             try
             {
-               
+                await unitOfWork.Analyzes.Delete(id);
+                await unitOfWork.SaveAsync();
+
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception ex)
             {
-                return View();
+                LoggerManager.Log.Error("", ex);
+                return View("~/Views/Shared/Error.cshtml", new HandleErrorInfo(ex, "Analyzes", "Index"));
             }
         }
 
         protected override void Dispose(bool disposing)
         {
-            unitOfWork.Dispose();
+            if (disposing)
+            {
+                unitOfWork.Dispose();
+            }
+          
             base.Dispose(disposing);
         }
     }

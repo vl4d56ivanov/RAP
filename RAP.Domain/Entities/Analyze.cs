@@ -14,9 +14,8 @@ namespace RAP.Domain.Entities
         public string Parameters { get; set; }
         public DateTime DateCreated { get; set; }
 
-        //TODO: Doctor?
-        //public int DoctorId { get; set; }
-        //public Doctor Doctor { get; set; }
+        public int EmployeeId { get; set; }
+        public Employee Employee { get; set; }
 
         public int PatientId { get; set; }
         public Patient Patient { get; set; }

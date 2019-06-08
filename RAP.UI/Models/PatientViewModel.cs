@@ -41,5 +41,6 @@ namespace RAP.UI.Models
         public AddressViewModel Address2 { get; set; }
 
         public ICollection<AppointmentViewModel> Appointments { get; set; }
+        public ICollection<AnalyzeViewModel> Analyzes { get; set; }
     }
 }
