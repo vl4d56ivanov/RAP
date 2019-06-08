@@ -113,7 +113,7 @@ namespace RAP.UI.Controllers
                     unitOfWork.Services.Create(service);
                     await unitOfWork.SaveAsync();
 
-                    LoggerManager.Log.Info($"Created new Service: {serviceViewModel.Name}.");
+                    //LoggerManager.Log.Info($"Created new Service: {serviceViewModel.Name}.");
 
                     return RedirectToAction("Index");
                 }
@@ -198,7 +198,7 @@ namespace RAP.UI.Controllers
                         unitOfWork.Services.Update(serviceFromDb);
                         await unitOfWork.SaveAsync();
                     }
-                    LoggerManager.Log.Info($"Updated Service: {serviceViewModel.Name}.");
+                    //LoggerManager.Log.Info($"Updated Service: {serviceViewModel.Name}.");
 
                     return RedirectToAction("Index");
                 }

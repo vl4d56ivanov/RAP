@@ -20,10 +20,12 @@ namespace RAP.Domain.Entities
         public Address Address2 { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
+        public ICollection<Analyze> Analyzes { get; set; }
 
         public Patient()
         {
             Appointments = new List<Appointment>();
+            Analyzes = new List<Analyze>();
         }
     }
 }

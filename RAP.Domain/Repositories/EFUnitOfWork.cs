@@ -14,6 +14,7 @@ namespace RAP.Domain.Repositories
         BaseRepository<Employee>    employeeRepository;            //EmployeesRepository
         BaseRepository<ServiceType> serviceTypeRepository;
 
+        AnalyzesRepository     analizesRepository;
         AppointmentsRepository appointmentRepository;
         PatientsRepository     patientRepository;
         ServicesRepository     serviceRepository;
@@ -86,6 +87,17 @@ namespace RAP.Domain.Repositories
                     serviceRepository = new ServicesRepository(db);
 
                 return serviceRepository;
+            }
+        }
+
+        public IBaseRepository<Analyze> Analyzes
+        {
+            get
+            {
+                if (analizesRepository == null)
+                    analizesRepository = new AnalyzesRepository(db);
+
+                return analizesRepository;
             }
         }
 

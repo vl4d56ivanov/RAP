@@ -37,6 +37,7 @@ namespace RAP.Domain.Identity
         public virtual DbSet<Service> Services { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Appointment> Appointments { get; set; }
+        public virtual DbSet<Analyze> Analyzes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

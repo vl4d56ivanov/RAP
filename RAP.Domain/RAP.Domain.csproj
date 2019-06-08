@@ -79,6 +79,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\Address.cs" />
+    <Compile Include="Entities\Analyze.cs" />
     <Compile Include="Entities\Appointment.cs" />
     <Compile Include="Entities\Employee.cs" />
     <Compile Include="Entities\Patient.cs" />
@@ -93,6 +94,7 @@
     <Compile Include="Interfaces\IEmailDeliveryService.cs" />
     <Compile Include="Interfaces\IGridsImagesService.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Repositories\AnalyzesRepository.cs" />
     <Compile Include="Repositories\AppointmentsRepository.cs" />
     <Compile Include="Repositories\PatientsRepository.cs" />
     <Compile Include="Repositories\ServicesRepository.cs" />
